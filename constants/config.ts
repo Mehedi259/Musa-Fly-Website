@@ -1,14 +1,14 @@
 export const SITE_CONFIG = {
-  name: "Musa Fly",
+  name: "MusaFly",
   description:
-    "Your trusted travel partner for flights, tours, and visa services. Experience premium travel with Musa Fly.",
-  url: "https://musafly.com",
-  ogImage: "https://musafly.com/og-image.jpg",
-  whatsappNumber: "1234567890", // Replace with actual WhatsApp number
-  whatsappLink: "https://wa.me/1234567890",
-  email: "info@musafly.com",
-  phone: "+1 (234) 567-890",
-  address: "123 Travel Street, City, Country",
+    "Your trusted travel partner for flights, tours, and visa services. Experience premium travel with MusaFly.",
+  url: "https://www.musafly.com",
+  ogImage: "https://www.musafly.com/og-image.jpg",
+  whatsappNumber: "8801331205412", // WhatsApp number from ID card
+  whatsappLink: "https://wa.me/8801331205412",
+  email: "contact@musafly.com",
+  phone: "+880 1331-205 412",
+  address: "Mirpur 11, A Block, Dhaka 1216",
   socialMedia: {
     facebook: "https://facebook.com/musafly",
     instagram: "https://instagram.com/musafly",
