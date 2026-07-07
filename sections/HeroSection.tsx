@@ -19,12 +19,12 @@ export function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 relative z-10 pt-32 pb-20">
+      <div className="container mx-auto px-4 relative z-10 pt-32 pb-40">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-24"
         >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -48,8 +48,10 @@ export function HeroSection() {
             with ease.
           </motion.p>
         </motion.div>
+      </div>
 
-        {/* Search Card */}
+      {/* Floating Search Card - Half overlapping */}
+      <div className="container mx-auto px-4 relative z-20 -mt-32">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
