@@ -1,4 +1,4 @@
-export type SearchTab = "flights" | "tours" | "visa";
+export type SearchTab = "flights" | "hotels" | "tours" | "visa";
 
 export interface FlightSearchForm {
   from: string;

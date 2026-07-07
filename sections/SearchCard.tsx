@@ -1,29 +1,49 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
 import { SITE_CONFIG } from "@/constants/config";
 import type { SearchTab } from "@/types";
-import { Calendar, MapPin, Plane, Ticket, Users, ArrowLeftRight, Hotel, Palmtree } from "lucide-react";
+import { ArrowLeftRight, Building2, Palmtree, Plane, Ticket } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function SearchCard() {
   const [activeTab, setActiveTab] = useState<SearchTab>("flights");
+  const [visaCountry, setVisaCountry] = useState("");
   const router = useRouter();
-  const handleSearch = () => window.open(SITE_CONFIG.whatsappLink, "_blank");
+
+  const handleSearch = () => {
+    if (activeTab === "visa") {
+      if (visaCountry) router.push(`/visa/${visaCountry.toLowerCase()}-visa`);
+      else router.push("/#visa");
+    } else {
+      window.open(SITE_CONFIG.whatsappLink, "_blank");
+    }
+  };
 
   return (
-    <div className="w-full flex items-center justify-center px-4">
-      <div className="bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-5xl">
-        <div className="flex border-b border-gray-200 bg-white rounded-t-3xl">
-          <TabButton icon={Plane} label="Flight" active={activeTab === "flights"} onClick={() => setActiveTab("flights")} />
-          <TabButton icon={Palmtree} label="Tour" active={activeTab === "tours"} onClick={() => setActiveTab("tours")} />
-          <TabButton icon={Ticket} label="Visa" active={activeTab === "visa"} onClick={() => setActiveTab("visa")} />
-        </div>
-        <div className="p-8 md:p-12">
-          {activeTab === "flights" && <FlightsForm onSearch={handleSearch} />}
-          {activeTab === "tours" && <ToursForm onSearch={handleSearch} />}
-          {activeTab === "visa" && <VisaForm router={router} />}
+    <div className="w-full flex justify-center px-4 mt-8 md:mt-16 relative">
+      {/* Tabs */}
+      <div className="absolute -top-10 md:-top-12 left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.05)] flex z-20 overflow-hidden">
+        <TabButton icon={Plane} label="Flight" active={activeTab === "flights"} onClick={() => setActiveTab("flights")} />
+        <TabButton icon={Building2} label="Hotel" active={activeTab === "hotels"} onClick={() => setActiveTab("hotels")} />
+        <TabButton icon={Palmtree} label="Tour" active={activeTab === "tours"} onClick={() => setActiveTab("tours")} />
+        <TabButton icon={Ticket} label="Visa" active={activeTab === "visa"} onClick={() => setActiveTab("visa")} />
+      </div>
+
+      {/* Main Card */}
+      <div className="bg-white rounded-[1.5rem] md:rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.08)] w-full max-w-[850px] pt-14 md:pt-16 px-4 md:px-8 pb-10 relative z-10 border border-gray-100">
+        {activeTab === "flights" && <FlightsForm />}
+        {activeTab === "tours" && <ToursForm />}
+        {activeTab === "visa" && <VisaForm country={visaCountry} setCountry={setVisaCountry} />}
+        
+        {/* Search Button */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
+          <button 
+            onClick={handleSearch}
+            className="bg-[#FFC107] hover:bg-[#FFB300] text-[#0A1128] font-bold text-lg md:text-xl px-12 md:px-20 py-3 md:py-4 rounded-xl md:rounded-2xl shadow-lg transition-transform hover:scale-105"
+          >
+            Search
+          </button>
         </div>
       </div>
     </div>
@@ -32,131 +52,136 @@ export function SearchCard() {
 
 function TabButton({ icon: Icon, label, active, onClick }: { icon: React.ElementType; label: string; active: boolean; onClick: () => void }) {
   return (
-    <button onClick={onClick} className={`flex-1 flex flex-col items-center gap-2 py-6 transition-colors relative ${active ? "text-primary" : "text-gray-400 hover:text-gray-600"}`}>
-      <Icon className="w-8 h-8" />
-      <span className="font-semibold text-base">{label}</span>
-      {active && <div className="absolute bottom-0 left-0 right-0 h-1 bg-primary rounded-t-lg" />}
+    <button onClick={onClick} className={`flex flex-col items-center justify-center gap-1 min-w-[70px] md:min-w-[95px] px-3 md:px-5 py-3 md:py-4 relative ${active ? "text-[#0A1128]" : "text-[#A0A4AB] hover:text-gray-600"}`}>
+      <Icon className={`w-5 h-5 md:w-6 md:h-6 ${active ? "text-[#5B9BD5]" : ""}`} strokeWidth={1.5} />
+      <span className="font-bold text-xs md:text-[13px]">{label}</span>
+      {active && <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-[3px] bg-[#FFC107] rounded-t-full" />}
     </button>
   );
 }
 
-function FlightsForm({ onSearch }: { onSearch: () => void }) {
+function FlightsForm() {
   const [tripType, setTripType] = useState("one-way");
+  
   return (
-    <form onSubmit={(e) => { e.preventDefault(); onSearch(); }} className="space-y-6">
-      <div className="flex gap-8">
+    <div className="space-y-5 md:space-y-6">
+      {/* Radio Buttons */}
+      <div className="flex gap-4 md:gap-8 mb-2 px-2">
         <label className="flex items-center gap-2 cursor-pointer">
-          <input type="radio" checked={tripType === "one-way"} onChange={() => setTripType("one-way")} className="w-6 h-6 text-primary" />
-          <span className="text-lg font-semibold text-dark">One Way</span>
+          <div className={`w-[18px] h-[18px] md:w-[22px] md:h-[22px] rounded-full border-[2px] flex items-center justify-center ${tripType === "one-way" ? "border-[#0A1128]" : "border-gray-300"}`}>
+            {tripType === "one-way" && <div className="w-[8px] h-[8px] md:w-[10px] md:h-[10px] rounded-full bg-[#0A1128]" />}
+          </div>
+          <span className={`text-sm md:text-[15px] font-bold ${tripType === "one-way" ? "text-[#0A1128]" : "text-[#B3B8C2]"}`}>One Way</span>
         </label>
         <label className="flex items-center gap-2 cursor-pointer">
-          <input type="radio" checked={tripType === "round-trip"} onChange={() => setTripType("round-trip")} className="w-6 h-6 text-primary" />
-          <span className="text-lg font-semibold text-gray-400">Round Way</span>
+          <div className={`w-[18px] h-[18px] md:w-[22px] md:h-[22px] rounded-full border-[2px] flex items-center justify-center ${tripType === "round-trip" ? "border-[#0A1128]" : "border-gray-300"}`}>
+            {tripType === "round-trip" && <div className="w-[8px] h-[8px] md:w-[10px] md:h-[10px] rounded-full bg-[#0A1128]" />}
+          </div>
+          <span className={`text-sm md:text-[15px] font-bold ${tripType === "round-trip" ? "text-[#0A1128]" : "text-[#B3B8C2]"}`}>Round Way</span>
+        </label>
+        <label className="flex items-center gap-2 cursor-pointer">
+          <div className={`w-[18px] h-[18px] md:w-[22px] md:h-[22px] rounded-full border-[2px] flex items-center justify-center ${tripType === "multi-city" ? "border-[#0A1128]" : "border-gray-300"}`}>
+            {tripType === "multi-city" && <div className="w-[8px] h-[8px] md:w-[10px] md:h-[10px] rounded-full bg-[#0A1128]" />}
+          </div>
+          <span className={`text-sm md:text-[15px] font-bold ${tripType === "multi-city" ? "text-[#0A1128]" : "text-[#B3B8C2]"}`}>Multi City</span>
         </label>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-[1fr,auto,1fr] gap-0 md:gap-4">
-        <div className="p-6 border-2 border-gray-200 rounded-2xl space-y-2 hover:border-primary transition-colors">
-          <div className="text-sm text-gray-500 uppercase tracking-wide font-semibold">FROM</div>
-          <input type="text" placeholder="Dhaka" className="w-full text-2xl font-bold text-dark outline-none bg-transparent" />
-          <div className="text-sm text-gray-400">DAC, Hazrat Shahjalal Internati...</div>
-        </div>
-        
-        <div className="flex items-center justify-center my-4 md:my-0">
-          <button type="button" className="w-14 h-14 rounded-full border-2 border-primary bg-white flex items-center justify-center hover:bg-primary hover:text-white transition-all">
-            <ArrowLeftRight className="w-6 h-6" />
-          </button>
-        </div>
-        
-        <div className="p-6 border-2 border-gray-200 rounded-2xl space-y-2 hover:border-primary transition-colors">
-          <div className="text-sm text-gray-500 uppercase tracking-wide font-semibold">TO</div>
-          <input type="text" placeholder="Cox's Bazar" className="w-full text-2xl font-bold text-dark outline-none bg-transparent" />
-          <div className="text-sm text-gray-400">CXB, Cox's Bazar Airport</div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-6 border-2 border-gray-200 rounded-2xl space-y-2 hover:border-primary transition-colors">
-          <div className="text-sm text-gray-500 uppercase tracking-wide font-semibold">DEPARTURE DATE</div>
-          <input type="date" className="w-full text-2xl font-bold text-dark outline-none bg-transparent" />
-          <div className="text-sm text-gray-400">Friday</div>
-        </div>
-        {tripType === "round-trip" && (
-          <div className="p-6 border-2 border-gray-200 rounded-2xl space-y-2 hover:border-primary transition-colors">
-            <div className="text-sm text-gray-500 uppercase tracking-wide font-semibold">RETURN DATE</div>
-            <input type="date" className="w-full text-2xl font-bold text-dark outline-none bg-transparent" />
-            <div className="text-sm text-gray-400">Saturday</div>
+      {/* Inputs Grid */}
+      <div className="flex flex-col gap-3 md:gap-4">
+        {/* Top Row: From / To */}
+        <div className="flex flex-col md:flex-row gap-3 md:gap-4 relative">
+          {/* FROM */}
+          <div className="flex-1 border border-gray-200 rounded-2xl p-4 md:p-5 hover:border-primary transition-colors cursor-text">
+            <div className="text-[11px] md:text-xs text-[#5B658A] uppercase tracking-wide font-medium mb-1 md:mb-1.5">FROM</div>
+            <div className="text-xl md:text-2xl font-bold text-[#0A1128] mb-0.5 md:mb-1">Dhaka</div>
+            <div className="text-xs md:text-sm text-gray-400 truncate">DAC, Hazrat Shahjalal Internati...</div>
           </div>
-        )}
+          
+          {/* Swap Button */}
+          <button type="button" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center text-[#5B658A] hover:text-[#0A1128] hover:border-[#0A1128] transition-all z-10 hidden md:flex shadow-sm">
+            <ArrowLeftRight className="w-4 h-4 md:w-5 md:h-5" strokeWidth={1.5} />
+          </button>
+          
+          {/* TO */}
+          <div className="flex-1 border border-gray-200 rounded-2xl p-4 md:p-5 hover:border-primary transition-colors cursor-text">
+            <div className="text-[11px] md:text-xs text-[#5B658A] uppercase tracking-wide font-medium mb-1 md:mb-1.5">TO</div>
+            <div className="text-xl md:text-2xl font-bold text-[#0A1128] mb-0.5 md:mb-1">Cox's Bazar</div>
+            <div className="text-xs md:text-sm text-gray-400 truncate">CXB, Cox's Bazar Airport</div>
+          </div>
+        </div>
+        
+        {/* Middle Row: Dates */}
+        <div className="flex flex-col md:flex-row gap-3 md:gap-4">
+          <div className="flex-1 border border-gray-200 rounded-2xl p-4 md:p-5 hover:border-primary transition-colors cursor-text">
+            <div className="text-[11px] md:text-xs text-[#5B658A] uppercase tracking-wide font-medium mb-1 md:mb-1.5">DEPARTURE DATE</div>
+            <div className="text-xl md:text-2xl font-bold text-[#0A1128] mb-0.5 md:mb-1">10 <span className="font-normal text-lg md:text-xl">Jul'26</span></div>
+            <div className="text-xs md:text-sm text-gray-400">Friday</div>
+          </div>
+          <div className="flex-1 border border-gray-200 rounded-2xl p-4 md:p-5 hover:border-primary transition-colors cursor-text flex flex-col justify-center">
+            <div className="text-[11px] md:text-xs text-[#5B658A] uppercase tracking-wide font-medium mb-1 md:mb-1.5">RETURN DATE</div>
+            <div className="flex items-center">
+              <span className="text-sm text-gray-400">Save more on return flight</span>
+            </div>
+          </div>
+        </div>
+        
+        {/* Bottom Row: Travelers */}
+        <div className="border border-gray-200 rounded-2xl p-4 md:p-5 hover:border-primary transition-colors cursor-text">
+          <div className="text-[11px] md:text-xs text-[#5B658A] uppercase tracking-wide font-medium mb-1 md:mb-1.5">TRAVELER, CLASS</div>
+          <div className="text-xl md:text-2xl font-bold text-[#0A1128] mb-0.5 md:mb-1">1 Traveler</div>
+          <div className="text-xs md:text-sm text-gray-400">Economy</div>
+        </div>
       </div>
-
-      <div className="p-6 border-2 border-gray-200 rounded-2xl space-y-2 hover:border-primary transition-colors">
-        <div className="text-sm text-gray-500 uppercase tracking-wide font-semibold">TRAVELER, CLASS</div>
-        <div className="text-2xl font-bold text-dark">1 Traveler</div>
-        <div className="text-sm text-gray-400">Economy</div>
-      </div>
-
-      <Button type="submit" className="w-full md:w-auto md:px-16 h-14 text-lg font-bold bg-yellow-400 hover:bg-yellow-500 text-dark rounded-2xl shadow-lg">
-        Search
-      </Button>
-    </form>
+    </div>
   );
 }
 
-function ToursForm({ onSearch }: { onSearch: () => void }) {
+function ToursForm() {
   return (
-    <form onSubmit={(e) => { e.preventDefault(); onSearch(); }} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-6 border-2 border-gray-200 rounded-2xl space-y-2">
-          <div className="text-sm text-gray-500 uppercase tracking-wide font-semibold">DESTINATION</div>
-          <select className="w-full text-2xl font-bold text-dark outline-none bg-transparent">
+    <div className="space-y-3 md:space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+        <div className="p-4 md:p-5 border border-gray-200 rounded-2xl hover:border-primary transition-colors">
+          <div className="text-[11px] md:text-xs text-[#5B658A] uppercase tracking-wide font-medium mb-1">DESTINATION</div>
+          <select className="w-full text-xl md:text-2xl font-bold text-[#0A1128] outline-none bg-transparent appearance-none cursor-pointer">
             <option>Singapore</option>
             <option>Malaysia</option>
             <option>Oman</option>
             <option>Bangladesh</option>
           </select>
         </div>
-        <div className="p-6 border-2 border-gray-200 rounded-2xl space-y-2">
-          <div className="text-sm text-gray-500 uppercase tracking-wide font-semibold">START DATE</div>
-          <input type="date" className="w-full text-2xl font-bold text-dark outline-none bg-transparent" />
+        <div className="p-4 md:p-5 border border-gray-200 rounded-2xl hover:border-primary transition-colors">
+          <div className="text-[11px] md:text-xs text-[#5B658A] uppercase tracking-wide font-medium mb-1">START DATE</div>
+          <input type="date" className="w-full text-xl md:text-2xl font-bold text-[#0A1128] outline-none bg-transparent cursor-pointer" />
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-6 border-2 border-gray-200 rounded-2xl space-y-2">
-          <div className="text-sm text-gray-500 uppercase tracking-wide font-semibold">DURATION</div>
-          <select className="w-full text-2xl font-bold text-dark outline-none bg-transparent">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+        <div className="p-4 md:p-5 border border-gray-200 rounded-2xl hover:border-primary transition-colors">
+          <div className="text-[11px] md:text-xs text-[#5B658A] uppercase tracking-wide font-medium mb-1">DURATION</div>
+          <select className="w-full text-xl md:text-2xl font-bold text-[#0A1128] outline-none bg-transparent appearance-none cursor-pointer">
             <option>5 Days / 4 Nights</option>
             <option>7 Days / 6 Nights</option>
           </select>
         </div>
-        <div className="p-6 border-2 border-gray-200 rounded-2xl space-y-2">
-          <div className="text-sm text-gray-500 uppercase tracking-wide font-semibold">TRAVELERS</div>
-          <select className="w-full text-2xl font-bold text-dark outline-none bg-transparent">
+        <div className="p-4 md:p-5 border border-gray-200 rounded-2xl hover:border-primary transition-colors">
+          <div className="text-[11px] md:text-xs text-[#5B658A] uppercase tracking-wide font-medium mb-1">TRAVELERS</div>
+          <select className="w-full text-xl md:text-2xl font-bold text-[#0A1128] outline-none bg-transparent appearance-none cursor-pointer">
             <option>2 People</option>
             <option>3-4 People</option>
           </select>
         </div>
       </div>
-      <Button type="submit" className="w-full md:w-auto md:px-16 h-14 text-lg font-bold bg-yellow-400 hover:bg-yellow-500 text-dark rounded-2xl shadow-lg">
-        Search
-      </Button>
-    </form>
+    </div>
   );
 }
 
-function VisaForm({ router }: { router: ReturnType<typeof useRouter> }) {
-  const [country, setCountry] = useState("");
-  const handleApply = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (country) router.push(`/visa/${country.toLowerCase()}-visa`);
-    else router.push("/#visa");
-  };
+function VisaForm({ country, setCountry }: { country: string; setCountry: (val: string) => void }) {
   return (
-    <form onSubmit={handleApply} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-6 border-2 border-gray-200 rounded-2xl space-y-2">
-          <div className="text-sm text-gray-500 uppercase tracking-wide font-semibold">COUNTRY</div>
-          <select value={country} onChange={(e) => setCountry(e.target.value)} className="w-full text-2xl font-bold text-dark outline-none bg-transparent">
+    <div className="space-y-3 md:space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+        <div className="p-4 md:p-5 border border-gray-200 rounded-2xl hover:border-primary transition-colors">
+          <div className="text-[11px] md:text-xs text-[#5B658A] uppercase tracking-wide font-medium mb-1">COUNTRY</div>
+          <select value={country} onChange={(e) => setCountry(e.target.value)} className="w-full text-xl md:text-2xl font-bold text-[#0A1128] outline-none bg-transparent appearance-none cursor-pointer">
             <option value="">Select Country</option>
             <option value="singapore">Singapore</option>
             <option value="malaysia">Malaysia</option>
@@ -164,24 +189,21 @@ function VisaForm({ router }: { router: ReturnType<typeof useRouter> }) {
             <option value="bangladesh">Bangladesh</option>
           </select>
         </div>
-        <div className="p-6 border-2 border-gray-200 rounded-2xl space-y-2">
-          <div className="text-sm text-gray-500 uppercase tracking-wide font-semibold">VISA TYPE</div>
-          <select className="w-full text-2xl font-bold text-dark outline-none bg-transparent">
+        <div className="p-4 md:p-5 border border-gray-200 rounded-2xl hover:border-primary transition-colors">
+          <div className="text-[11px] md:text-xs text-[#5B658A] uppercase tracking-wide font-medium mb-1">VISA TYPE</div>
+          <select className="w-full text-xl md:text-2xl font-bold text-[#0A1128] outline-none bg-transparent appearance-none cursor-pointer">
             <option>Tourist Visa</option>
             <option>Business Visa</option>
           </select>
         </div>
       </div>
-      <div className="p-6 border-2 border-gray-200 rounded-2xl space-y-2">
-        <div className="text-sm text-gray-500 uppercase tracking-wide font-semibold">APPLICANTS</div>
-        <select className="w-full text-2xl font-bold text-dark outline-none bg-transparent">
+      <div className="p-4 md:p-5 border border-gray-200 rounded-2xl hover:border-primary transition-colors">
+        <div className="text-[11px] md:text-xs text-[#5B658A] uppercase tracking-wide font-medium mb-1">APPLICANTS</div>
+        <select className="w-full text-xl md:text-2xl font-bold text-[#0A1128] outline-none bg-transparent appearance-none cursor-pointer">
           <option>1 Applicant</option>
           <option>2 Applicants</option>
         </select>
       </div>
-      <Button type="submit" className="w-full md:w-auto md:px-16 h-14 text-lg font-bold bg-yellow-400 hover:bg-yellow-500 text-dark rounded-2xl shadow-lg">
-        Apply for Visa
-      </Button>
-    </form>
+    </div>
   );
 }
