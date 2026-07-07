@@ -35,29 +35,7 @@ export default async function Image() {
             marginBottom: 40,
           }}
         >
-          <div
-            style={{
-              width: 100,
-              height: 100,
-              background: "white",
-              borderRadius: 20,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: 20,
-            }}
-          >
-            <span
-              style={{
-                fontSize: 60,
-                fontWeight: "bold",
-                color: "#0F6FFF",
-              }}
-            >
-              M
-            </span>
-          </div>
-          <span style={{ fontWeight: "bold" }}>{SITE_CONFIG.name}</span>
+          <span style={{ fontWeight: "bold", fontSize: 80 }}>{SITE_CONFIG.name}</span>
         </div>
         <div
           style={{

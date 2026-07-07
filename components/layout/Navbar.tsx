@@ -3,6 +3,7 @@
 import { NAVIGATION_ITEMS, SITE_CONFIG } from "@/constants/config";
 import { cn } from "@/lib/utils";
 import { Menu, MessageCircle, X } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/Button";
@@ -31,11 +32,15 @@ export function Navbar() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="relative">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">M</span>
-              </div>
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="relative w-12 h-12">
+              <Image
+                src="/logo.png"
+                alt="MusaFly Logo"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
             <span
               className={cn(
