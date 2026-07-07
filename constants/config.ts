@@ -18,9 +18,9 @@ export const SITE_CONFIG = {
 };
 
 export const COLORS = {
-  primary: "#0F6FFF",
-  secondary: "#00C2A8",
-  dark: "#0F172A",
+  primary: "#5B9BD5", // Logo blue
+  secondary: "#F4B942", // Logo golden/yellow
+  dark: "#1A1A1A",
 };
 
 export const NAVIGATION_ITEMS = [
