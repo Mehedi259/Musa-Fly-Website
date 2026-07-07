@@ -51,16 +51,15 @@ export function HeroSection() {
       </div>
 
       {/* Floating Search Card - Half overlapping and perfectly centered */}
-      <div className="absolute left-0 right-0 bottom-0 transform translate-y-1/2 z-20">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <SearchCard />
-          </motion.div>
-        </div>
+      <div className="absolute left-0 right-0 bottom-0 transform translate-y-1/2 z-20 w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="w-full"
+        >
+          <SearchCard />
+        </motion.div>
       </div>
 
       {/* Scroll Indicator */}

@@ -13,8 +13,8 @@ export function SearchCard() {
   const handleSearch = () => window.open(SITE_CONFIG.whatsappLink, "_blank");
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
+    <div className="w-full flex items-center justify-center px-4">
+      <div className="bg-white rounded-3xl shadow-2xl overflow-hidden w-full max-w-5xl">
         <div className="flex border-b border-gray-200 bg-white rounded-t-3xl">
           <TabButton icon={Plane} label="Flight" active={activeTab === "flights"} onClick={() => setActiveTab("flights")} />
           <TabButton icon={Palmtree} label="Tour" active={activeTab === "tours"} onClick={() => setActiveTab("tours")} />
