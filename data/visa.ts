@@ -7,6 +7,14 @@ export interface VisaService {
   requirements: string[];
   popular: boolean;
   image: string;
+  description: string;
+  validityPeriod: string;
+  processingSteps: string[];
+  additionalInfo: string[];
+  documentsNeeded: {
+    title: string;
+    description: string;
+  }[];
 }
 
 export const visaServices: VisaService[] = [
@@ -25,6 +33,46 @@ export const visaServices: VisaService[] = [
     ],
     popular: true,
     image: "/images/visa/singapore.jpg",
+    description: "Singapore is a vibrant city-state known for its modern architecture, diverse culture, and world-class attractions. Our Singapore tourist visa service ensures a smooth and hassle-free application process.",
+    validityPeriod: "30 days (single/multiple entry available)",
+    processingSteps: [
+      "Submit required documents",
+      "Application review (1-2 days)",
+      "Embassy processing (3-5 days)",
+      "Visa approval and collection",
+    ],
+    additionalInfo: [
+      "Tourist visa holders can stay up to 30 days",
+      "Extensions possible for special circumstances",
+      "Multiple entry visa available",
+      "Business visa also available on request",
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport with minimum 6 months validity and at least 2 blank pages",
+      },
+      {
+        title: "Photographs",
+        description: "2 recent passport-size color photographs (35mm x 45mm) with white background",
+      },
+      {
+        title: "Bank Statement",
+        description: "Last 3 months bank statement showing sufficient funds (minimum $3000)",
+      },
+      {
+        title: "Flight Tickets",
+        description: "Confirmed round-trip flight booking",
+      },
+      {
+        title: "Hotel Booking",
+        description: "Hotel reservation confirmation for entire stay period",
+      },
+      {
+        title: "Cover Letter",
+        description: "Purpose of visit and travel itinerary",
+      },
+    ],
   },
   {
     id: "malaysia-visa",
@@ -41,6 +89,42 @@ export const visaServices: VisaService[] = [
     ],
     popular: true,
     image: "/images/visa/malaysia.jpg",
+    description: "Malaysia offers beautiful beaches, modern cities, and rich cultural heritage. Get your Malaysian tourist visa quickly and easily with our expert assistance.",
+    validityPeriod: "30-90 days (depends on visa type)",
+    processingSteps: [
+      "Document submission and verification",
+      "Online application filing",
+      "Embassy appointment (if required)",
+      "Visa approval and delivery",
+    ],
+    additionalInfo: [
+      "eVisa available for eligible countries",
+      "Transit visa available for layovers",
+      "Social visit visa for family visits",
+      "Multiple entry visa options available",
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Valid passport with at least 6 months validity",
+      },
+      {
+        title: "Photographs",
+        description: "2 passport-size color photographs with blue background",
+      },
+      {
+        title: "Financial Proof",
+        description: "Bank statement showing minimum $2000 balance",
+      },
+      {
+        title: "Travel Itinerary",
+        description: "Detailed travel plan including flights and accommodations",
+      },
+      {
+        title: "Accommodation Proof",
+        description: "Hotel bookings or invitation letter from host",
+      },
+    ],
   },
   {
     id: "oman-visa",
@@ -57,6 +141,42 @@ export const visaServices: VisaService[] = [
     ],
     popular: true,
     image: "/images/visa/oman.jpg",
+    description: "Discover the beauty of Oman with its stunning deserts, pristine beaches, and rich Arabian heritage. We make your Oman visa application simple and stress-free.",
+    validityPeriod: "30 days (single/multiple entry)",
+    processingSteps: [
+      "Online application submission",
+      "Document verification",
+      "Embassy processing",
+      "eVisa delivery via email",
+    ],
+    additionalInfo: [
+      "eVisa available for most nationalities",
+      "Express processing available (2-3 days)",
+      "Family visa packages available",
+      "Business visa options available",
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport Copy",
+        description: "Colored scan of passport bio page (minimum 6 months validity)",
+      },
+      {
+        title: "Photograph",
+        description: "Digital passport-size photograph with white background",
+      },
+      {
+        title: "Hotel Confirmation",
+        description: "Confirmed hotel booking for entire stay",
+      },
+      {
+        title: "Flight Booking",
+        description: "Return flight tickets",
+      },
+      {
+        title: "Travel Insurance",
+        description: "Valid travel insurance covering Oman (recommended)",
+      },
+    ],
   },
   {
     id: "bangladesh-visa",
@@ -73,5 +193,41 @@ export const visaServices: VisaService[] = [
     ],
     popular: false,
     image: "/images/visa/bangladesh.jpg",
+    description: "Experience the natural beauty and warm hospitality of Bangladesh. Our visa services ensure a smooth application process for your Bangladesh visit.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection and verification",
+      "Application form completion",
+      "Embassy submission",
+      "Visa collection after approval",
+    ],
+    additionalInfo: [
+      "Visa on arrival available for some countries",
+      "Business visa available",
+      "Long-term visa options for extended stays",
+      "Student visa processing also available",
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months",
+      },
+      {
+        title: "Photographs",
+        description: "4 recent passport-size photographs",
+      },
+      {
+        title: "Application Form",
+        description: "Completed and signed visa application form",
+      },
+      {
+        title: "Invitation Letter",
+        description: "Invitation letter from host in Bangladesh (if applicable)",
+      },
+      {
+        title: "Financial Documents",
+        description: "Proof of sufficient funds for the trip",
+      },
+    ],
   },
 ];

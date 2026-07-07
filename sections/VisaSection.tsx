@@ -9,8 +9,8 @@ import { motion } from "framer-motion";
 import { CheckCircle, Clock, FileText } from "lucide-react";
 
 export function VisaSection() {
-  const handleApply = () => {
-    window.open(SITE_CONFIG.whatsappLink, "_blank");
+  const handleApply = (visaId: string) => {
+    window.location.href = `/visa/${visaId}`;
   };
 
   return (
@@ -104,9 +104,9 @@ export function VisaSection() {
                   <Button
                     variant="primary"
                     className="w-full"
-                    onClick={handleApply}
+                    onClick={() => handleApply(visa.id)}
                   >
-                    Apply Now
+                    View Details & Apply
                   </Button>
                 </CardFooter>
               </Card>
