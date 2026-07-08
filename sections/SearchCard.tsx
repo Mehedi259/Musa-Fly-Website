@@ -140,7 +140,7 @@ export function SearchCard() {
         </div>
 
         {/* Main Card */}
-        <div className="bg-primary/95 backdrop-blur-xl rounded-[1.5rem] md:rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.2)] w-full max-w-[850px] pt-12 md:pt-16 px-3 md:px-8 pb-10 relative z-10 border border-white/10">
+        <div className="bg-gradient-to-br from-primary-600/95 to-primary-900/95 backdrop-blur-xl rounded-[1.5rem] md:rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.2)] w-full max-w-[850px] pt-12 md:pt-16 px-3 md:px-8 pb-10 relative z-10 border border-white/10">
           {activeTab === "flights" && (
             <FlightsForm
               from={flightFrom} setFrom={setFlightFrom}
@@ -236,14 +236,14 @@ function FlightsForm({ from, setFrom, to, setTo, date, setDate, tripType, setTri
         {/* Top Row: From / To */}
         <div className="flex flex-row gap-2 md:gap-4 relative">
           {/* FROM */}
-          <div className="flex-1 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl p-2 md:p-5 hover:border-secondary transition-colors min-w-0">
+          <div className="flex-1 flex flex-col items-center text-center border border-white/20 bg-white/5 rounded-xl md:rounded-2xl p-2 md:p-5 hover:border-secondary transition-colors min-w-0">
             <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-0.5 md:mb-1.5">FROM</div>
-            <select value={from} onChange={(e) => setFrom(e.target.value)} className="w-full text-sm md:text-2xl font-bold text-white bg-transparent outline-none cursor-pointer appearance-none truncate mb-0.5 md:mb-1">
+            <select value={from} onChange={(e) => setFrom(e.target.value)} className="w-full text-center text-sm md:text-2xl font-bold text-white bg-transparent outline-none cursor-pointer appearance-none truncate mb-0.5 md:mb-1">
               {AIRPORTS.map(airport => (
-                <option key={airport.code} value={airport.code} className="text-gray-900">{airport.city}</option>
+                <option key={airport.code} value={airport.code} className="text-gray-900 text-center">{airport.city}</option>
               ))}
             </select>
-            <div className="text-[9px] md:text-sm text-white/50 truncate">{fromAirport ? `${fromAirport.code}, ${fromAirport.name}` : ""}</div>
+            <div className="text-[9px] md:text-sm text-white/50 truncate w-full">{fromAirport ? `${fromAirport.code}, ${fromAirport.name}` : ""}</div>
           </div>
           
           {/* Swap Button - centered between FROM and TO */}
@@ -252,24 +252,24 @@ function FlightsForm({ from, setFrom, to, setTo, date, setDate, tripType, setTri
           </button>
           
           {/* TO */}
-          <div className="flex-1 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl p-2 md:p-5 hover:border-secondary transition-colors min-w-0">
+          <div className="flex-1 flex flex-col items-center text-center border border-white/20 bg-white/5 rounded-xl md:rounded-2xl p-2 md:p-5 hover:border-secondary transition-colors min-w-0">
             <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-0.5 md:mb-1.5">TO</div>
-            <select value={to} onChange={(e) => setTo(e.target.value)} className="w-full text-sm md:text-2xl font-bold text-white bg-transparent outline-none cursor-pointer appearance-none truncate mb-0.5 md:mb-1">
+            <select value={to} onChange={(e) => setTo(e.target.value)} className="w-full text-center text-sm md:text-2xl font-bold text-white bg-transparent outline-none cursor-pointer appearance-none truncate mb-0.5 md:mb-1">
               {AIRPORTS.map(airport => (
-                <option key={airport.code} value={airport.code} className="text-gray-900">{airport.city}</option>
+                <option key={airport.code} value={airport.code} className="text-gray-900 text-center">{airport.city}</option>
               ))}
             </select>
-            <div className="text-[9px] md:text-sm text-white/50 truncate">{toAirport ? `${toAirport.code}, ${toAirport.name}` : ""}</div>
+            <div className="text-[9px] md:text-sm text-white/50 truncate w-full">{toAirport ? `${toAirport.code}, ${toAirport.name}` : ""}</div>
           </div>
         </div>
         
         {/* Middle Row: Dates */}
         <div className="flex flex-row gap-2 md:gap-4">
-          <div className="flex-1 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl p-2 md:p-5 hover:border-secondary transition-colors cursor-text min-w-0">
+          <div className="flex-1 flex flex-col items-center text-center border border-white/20 bg-white/5 rounded-xl md:rounded-2xl p-2 md:p-5 hover:border-secondary transition-colors cursor-text min-w-0">
             <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-0.5 md:mb-1.5">DEPARTURE DATE</div>
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full text-sm md:text-2xl font-bold text-white bg-transparent outline-none cursor-pointer [color-scheme:dark]" />
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full text-center text-sm md:text-2xl font-bold text-white bg-transparent outline-none cursor-pointer [color-scheme:dark]" />
           </div>
-          <div className="flex-1 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl p-2 md:p-5 hover:border-secondary transition-colors cursor-text flex flex-col justify-center min-w-0">
+          <div className="flex-1 flex flex-col items-center text-center border border-white/20 bg-white/5 rounded-xl md:rounded-2xl p-2 md:p-5 hover:border-secondary transition-colors cursor-text justify-center min-w-0">
             <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-0.5 md:mb-1.5">RETURN DATE</div>
             <div className="flex items-center">
               <span className="text-[10px] md:text-sm text-white/50 truncate">Save more on return flight</span>
@@ -278,16 +278,16 @@ function FlightsForm({ from, setFrom, to, setTo, date, setDate, tripType, setTri
         </div>
         
         {/* Bottom Row: Travelers */}
-        <div className="border border-white/20 bg-white/5 rounded-xl md:rounded-2xl p-2 md:p-5 hover:border-secondary transition-colors cursor-text">
+        <div className="border flex flex-col items-center text-center border-white/20 bg-white/5 rounded-xl md:rounded-2xl p-2 md:p-5 hover:border-secondary transition-colors cursor-text">
           <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-0.5 md:mb-1.5">TRAVELER, CLASS</div>
-          <select value={travelers} onChange={(e) => setTravelers(e.target.value)} className="w-full text-sm md:text-2xl font-bold text-white bg-transparent outline-none cursor-pointer appearance-none">
-            <option className="text-gray-900">1 Traveler</option>
-            <option className="text-gray-900">2 Travelers</option>
-            <option className="text-gray-900">3 Travelers</option>
-            <option className="text-gray-900">4 Travelers</option>
-            <option className="text-gray-900">5+ Travelers</option>
+          <select value={travelers} onChange={(e) => setTravelers(e.target.value)} className="w-full text-center text-sm md:text-2xl font-bold text-white bg-transparent outline-none cursor-pointer appearance-none">
+            <option className="text-gray-900 text-center">1 Traveler</option>
+            <option className="text-gray-900 text-center">2 Travelers</option>
+            <option className="text-gray-900 text-center">3 Travelers</option>
+            <option className="text-gray-900 text-center">4 Travelers</option>
+            <option className="text-gray-900 text-center">5+ Travelers</option>
           </select>
-          <div className="text-[9px] md:text-sm text-white/50 mt-0.5 md:mt-1">Economy</div>
+          <div className="text-[9px] md:text-sm text-white/50 mt-0.5 md:mt-1 w-full text-center">Economy</div>
         </div>
       </div>
     </div>
@@ -305,39 +305,39 @@ function ToursForm({ destination, setDestination, date, setDate, duration, setDu
   return (
     <div className="space-y-2 md:space-y-4">
       <div className="flex flex-row gap-2 md:gap-4">
-        <div className="flex-1 p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
+        <div className="flex-1 flex flex-col items-center text-center p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
           <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-1">DESTINATION</div>
-          <select value={destination} onChange={(e) => setDestination(e.target.value)} className="w-full text-sm md:text-2xl font-bold text-white outline-none bg-transparent appearance-none cursor-pointer truncate">
-            <option className="text-gray-900">Singapore</option>
-            <option className="text-gray-900">Malaysia</option>
-            <option className="text-gray-900">Oman</option>
-            <option className="text-gray-900">Bangladesh</option>
-            <option className="text-gray-900">Thailand</option>
-            <option className="text-gray-900">Maldives</option>
-            <option className="text-gray-900">Dubai</option>
+          <select value={destination} onChange={(e) => setDestination(e.target.value)} className="w-full text-center text-sm md:text-2xl font-bold text-white outline-none bg-transparent appearance-none cursor-pointer truncate">
+            <option className="text-gray-900 text-center">Singapore</option>
+            <option className="text-gray-900 text-center">Malaysia</option>
+            <option className="text-gray-900 text-center">Oman</option>
+            <option className="text-gray-900 text-center">Bangladesh</option>
+            <option className="text-gray-900 text-center">Thailand</option>
+            <option className="text-gray-900 text-center">Maldives</option>
+            <option className="text-gray-900 text-center">Dubai</option>
           </select>
         </div>
-        <div className="flex-1 p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
+        <div className="flex-1 flex flex-col items-center text-center p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
           <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-1">START DATE</div>
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full text-sm md:text-2xl font-bold text-white outline-none bg-transparent cursor-pointer [color-scheme:dark]" />
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="w-full text-center text-sm md:text-2xl font-bold text-white outline-none bg-transparent cursor-pointer [color-scheme:dark]" />
         </div>
       </div>
       <div className="flex flex-row gap-2 md:gap-4">
-        <div className="flex-1 p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
+        <div className="flex-1 flex flex-col items-center text-center p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
           <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-1">DURATION</div>
-          <select value={duration} onChange={(e) => setDuration(e.target.value)} className="w-full text-sm md:text-2xl font-bold text-white outline-none bg-transparent appearance-none cursor-pointer truncate">
-            <option className="text-gray-900">5 Days / 4 Nights</option>
-            <option className="text-gray-900">7 Days / 6 Nights</option>
-            <option className="text-gray-900">3 Days / 2 Nights</option>
+          <select value={duration} onChange={(e) => setDuration(e.target.value)} className="w-full text-center text-sm md:text-2xl font-bold text-white outline-none bg-transparent appearance-none cursor-pointer truncate">
+            <option className="text-gray-900 text-center">5 Days / 4 Nights</option>
+            <option className="text-gray-900 text-center">7 Days / 6 Nights</option>
+            <option className="text-gray-900 text-center">3 Days / 2 Nights</option>
           </select>
         </div>
-        <div className="flex-1 p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
+        <div className="flex-1 flex flex-col items-center text-center p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
           <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-1">TRAVELERS</div>
-          <select value={travelers} onChange={(e) => setTravelers(e.target.value)} className="w-full text-sm md:text-2xl font-bold text-white outline-none bg-transparent appearance-none cursor-pointer truncate">
-            <option className="text-gray-900">2 People</option>
-            <option className="text-gray-900">3-4 People</option>
-            <option className="text-gray-900">1 Person</option>
-            <option className="text-gray-900">5+ People</option>
+          <select value={travelers} onChange={(e) => setTravelers(e.target.value)} className="w-full text-center text-sm md:text-2xl font-bold text-white outline-none bg-transparent appearance-none cursor-pointer truncate">
+            <option className="text-gray-900 text-center">2 People</option>
+            <option className="text-gray-900 text-center">3-4 People</option>
+            <option className="text-gray-900 text-center">1 Person</option>
+            <option className="text-gray-900 text-center">5+ People</option>
           </select>
         </div>
       </div>
@@ -349,45 +349,45 @@ function VisaForm({ country, setCountry }: { country: string; setCountry: (val: 
   return (
     <div className="space-y-2 md:space-y-4">
       <div className="flex flex-row gap-2 md:gap-4">
-        <div className="flex-1 p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
+        <div className="flex-1 flex flex-col items-center text-center p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
           <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-1">COUNTRY</div>
-          <select value={country} onChange={(e) => setCountry(e.target.value)} className="w-full text-sm md:text-2xl font-bold text-white outline-none bg-transparent appearance-none cursor-pointer truncate">
-            <option value="" className="text-gray-900">Select Country</option>
-            <option value="singapore" className="text-gray-900">Singapore</option>
-            <option value="malaysia" className="text-gray-900">Malaysia</option>
-            <option value="oman" className="text-gray-900">Oman</option>
-            <option value="bangladesh" className="text-gray-900">Bangladesh</option>
-            <option value="thailand" className="text-gray-900">Thailand</option>
-            <option value="dubai" className="text-gray-900">Dubai (UAE)</option>
-            <option value="saudi" className="text-gray-900">Saudi Arabia</option>
-            <option value="usa" className="text-gray-900">USA</option>
-            <option value="uk" className="text-gray-900">UK</option>
-            <option value="canada" className="text-gray-900">Canada</option>
-            <option value="australia" className="text-gray-900">Australia</option>
-            <option value="schengen" className="text-gray-900">Schengen</option>
-            <option value="japan" className="text-gray-900">Japan</option>
-            <option value="korea" className="text-gray-900">South Korea</option>
-            <option value="vietnam" className="text-gray-900">Vietnam</option>
-            <option value="egypt" className="text-gray-900">Egypt</option>
+          <select value={country} onChange={(e) => setCountry(e.target.value)} className="w-full text-center text-sm md:text-2xl font-bold text-white outline-none bg-transparent appearance-none cursor-pointer truncate">
+            <option value="" className="text-gray-900 text-center">Select Country</option>
+            <option value="singapore" className="text-gray-900 text-center">Singapore</option>
+            <option value="malaysia" className="text-gray-900 text-center">Malaysia</option>
+            <option value="oman" className="text-gray-900 text-center">Oman</option>
+            <option value="bangladesh" className="text-gray-900 text-center">Bangladesh</option>
+            <option value="thailand" className="text-gray-900 text-center">Thailand</option>
+            <option value="dubai" className="text-gray-900 text-center">Dubai (UAE)</option>
+            <option value="saudi" className="text-gray-900 text-center">Saudi Arabia</option>
+            <option value="usa" className="text-gray-900 text-center">USA</option>
+            <option value="uk" className="text-gray-900 text-center">UK</option>
+            <option value="canada" className="text-gray-900 text-center">Canada</option>
+            <option value="australia" className="text-gray-900 text-center">Australia</option>
+            <option value="schengen" className="text-gray-900 text-center">Schengen</option>
+            <option value="japan" className="text-gray-900 text-center">Japan</option>
+            <option value="korea" className="text-gray-900 text-center">South Korea</option>
+            <option value="vietnam" className="text-gray-900 text-center">Vietnam</option>
+            <option value="egypt" className="text-gray-900 text-center">Egypt</option>
           </select>
         </div>
-        <div className="flex-1 p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
+        <div className="flex-1 flex flex-col items-center text-center p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
           <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-1">VISA TYPE</div>
-          <select className="w-full text-sm md:text-2xl font-bold text-white outline-none bg-transparent appearance-none cursor-pointer truncate">
-            <option className="text-gray-900">Tourist Visa</option>
-            <option className="text-gray-900">Business Visa</option>
-            <option className="text-gray-900">Student Visa</option>
-            <option className="text-gray-900">Work Visa</option>
+          <select className="w-full text-center text-sm md:text-2xl font-bold text-white outline-none bg-transparent appearance-none cursor-pointer truncate">
+            <option className="text-gray-900 text-center">Tourist Visa</option>
+            <option className="text-gray-900 text-center">Business Visa</option>
+            <option className="text-gray-900 text-center">Student Visa</option>
+            <option className="text-gray-900 text-center">Work Visa</option>
           </select>
         </div>
       </div>
-      <div className="p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
+      <div className="flex flex-col items-center text-center p-2 md:p-5 border border-white/20 bg-white/5 rounded-xl md:rounded-2xl hover:border-secondary transition-colors min-w-0">
         <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-1">APPLICANTS</div>
-        <select className="w-full text-sm md:text-2xl font-bold text-white outline-none bg-transparent appearance-none cursor-pointer truncate">
-          <option className="text-gray-900">1 Applicant</option>
-          <option className="text-gray-900">2 Applicants</option>
-          <option className="text-gray-900">3 Applicants</option>
-          <option className="text-gray-900">4+ Applicants</option>
+        <select className="w-full text-center text-sm md:text-2xl font-bold text-white outline-none bg-transparent appearance-none cursor-pointer truncate">
+          <option className="text-gray-900 text-center">1 Applicant</option>
+          <option className="text-gray-900 text-center">2 Applicants</option>
+          <option className="text-gray-900 text-center">3 Applicants</option>
+          <option className="text-gray-900 text-center">4+ Applicants</option>
         </select>
       </div>
     </div>
