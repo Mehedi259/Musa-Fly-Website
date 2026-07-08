@@ -230,4 +230,496 @@ export const visaServices: VisaService[] = [
       },
     ],
   },
+  {
+    id: "thailand-visa",
+    country: "Thailand",
+    processingTime: "5-10 working days",
+    startingPrice: 50,
+    type: "Tourist Visa",
+    requirements: [
+      "Valid passport (min 6 months)",
+      "Passport size photos",
+      "Bank statement (last 3 months)",
+      "Flight & Hotel booking"
+    ],
+    popular: false,
+    image: "/images/visa/thailand.jpg",
+    description: "Experience the culture and beauty of Thailand with our streamlined visa services.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection",
+      "Application processing",
+      "Embassy submission",
+      "Visa collection"
+    ],
+    additionalInfo: [
+      "Fast track processing available on request",
+      "Multiple entry options available for eligible applicants"
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months"
+      },
+      {
+        title: "Photographs",
+        description: "Recent passport-size photographs with white background"
+      },
+      {
+        title: "Financial Documents",
+        description: "Last 3-6 months bank statement"
+      }
+    ]
+  },
+  {
+    id: "dubai-visa",
+    country: "Dubai",
+    processingTime: "5-10 working days",
+    startingPrice: 150,
+    type: "Tourist Visa",
+    requirements: [
+      "Valid passport (min 6 months)",
+      "Passport size photos",
+      "Bank statement (last 3 months)",
+      "Flight & Hotel booking"
+    ],
+    popular: false,
+    image: "/images/visa/dubai.jpg",
+    description: "Experience the culture and beauty of Dubai with our streamlined visa services.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection",
+      "Application processing",
+      "Embassy submission",
+      "Visa collection"
+    ],
+    additionalInfo: [
+      "Fast track processing available on request",
+      "Multiple entry options available for eligible applicants"
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months"
+      },
+      {
+        title: "Photographs",
+        description: "Recent passport-size photographs with white background"
+      },
+      {
+        title: "Financial Documents",
+        description: "Last 3-6 months bank statement"
+      }
+    ]
+  },
+  {
+    id: "saudi-visa",
+    country: "Saudi Arabia",
+    processingTime: "5-10 working days",
+    startingPrice: 200,
+    type: "Tourist Visa",
+    requirements: [
+      "Valid passport (min 6 months)",
+      "Passport size photos",
+      "Bank statement (last 3 months)",
+      "Flight & Hotel booking"
+    ],
+    popular: false,
+    image: "/images/visa/saudi.jpg",
+    description: "Experience the culture and beauty of Saudi Arabia with our streamlined visa services.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection",
+      "Application processing",
+      "Embassy submission",
+      "Visa collection"
+    ],
+    additionalInfo: [
+      "Fast track processing available on request",
+      "Multiple entry options available for eligible applicants"
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months"
+      },
+      {
+        title: "Photographs",
+        description: "Recent passport-size photographs with white background"
+      },
+      {
+        title: "Financial Documents",
+        description: "Last 3-6 months bank statement"
+      }
+    ]
+  },
+  {
+    id: "usa-visa",
+    country: "USA",
+    processingTime: "5-10 working days",
+    startingPrice: 160,
+    type: "Tourist Visa",
+    requirements: [
+      "Valid passport (min 6 months)",
+      "Passport size photos",
+      "Bank statement (last 3 months)",
+      "Flight & Hotel booking"
+    ],
+    popular: false,
+    image: "/images/visa/usa.jpg",
+    description: "Experience the culture and beauty of USA with our streamlined visa services.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection",
+      "Application processing",
+      "Embassy submission",
+      "Visa collection"
+    ],
+    additionalInfo: [
+      "Fast track processing available on request",
+      "Multiple entry options available for eligible applicants"
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months"
+      },
+      {
+        title: "Photographs",
+        description: "Recent passport-size photographs with white background"
+      },
+      {
+        title: "Financial Documents",
+        description: "Last 3-6 months bank statement"
+      }
+    ]
+  },
+  {
+    id: "uk-visa",
+    country: "UK",
+    processingTime: "5-10 working days",
+    startingPrice: 130,
+    type: "Tourist Visa",
+    requirements: [
+      "Valid passport (min 6 months)",
+      "Passport size photos",
+      "Bank statement (last 3 months)",
+      "Flight & Hotel booking"
+    ],
+    popular: false,
+    image: "/images/visa/uk.jpg",
+    description: "Experience the culture and beauty of UK with our streamlined visa services.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection",
+      "Application processing",
+      "Embassy submission",
+      "Visa collection"
+    ],
+    additionalInfo: [
+      "Fast track processing available on request",
+      "Multiple entry options available for eligible applicants"
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months"
+      },
+      {
+        title: "Photographs",
+        description: "Recent passport-size photographs with white background"
+      },
+      {
+        title: "Financial Documents",
+        description: "Last 3-6 months bank statement"
+      }
+    ]
+  },
+  {
+    id: "canada-visa",
+    country: "Canada",
+    processingTime: "5-10 working days",
+    startingPrice: 100,
+    type: "Tourist Visa",
+    requirements: [
+      "Valid passport (min 6 months)",
+      "Passport size photos",
+      "Bank statement (last 3 months)",
+      "Flight & Hotel booking"
+    ],
+    popular: false,
+    image: "/images/visa/canada.jpg",
+    description: "Experience the culture and beauty of Canada with our streamlined visa services.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection",
+      "Application processing",
+      "Embassy submission",
+      "Visa collection"
+    ],
+    additionalInfo: [
+      "Fast track processing available on request",
+      "Multiple entry options available for eligible applicants"
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months"
+      },
+      {
+        title: "Photographs",
+        description: "Recent passport-size photographs with white background"
+      },
+      {
+        title: "Financial Documents",
+        description: "Last 3-6 months bank statement"
+      }
+    ]
+  },
+  {
+    id: "australia-visa",
+    country: "Australia",
+    processingTime: "5-10 working days",
+    startingPrice: 140,
+    type: "Tourist Visa",
+    requirements: [
+      "Valid passport (min 6 months)",
+      "Passport size photos",
+      "Bank statement (last 3 months)",
+      "Flight & Hotel booking"
+    ],
+    popular: false,
+    image: "/images/visa/australia.jpg",
+    description: "Experience the culture and beauty of Australia with our streamlined visa services.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection",
+      "Application processing",
+      "Embassy submission",
+      "Visa collection"
+    ],
+    additionalInfo: [
+      "Fast track processing available on request",
+      "Multiple entry options available for eligible applicants"
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months"
+      },
+      {
+        title: "Photographs",
+        description: "Recent passport-size photographs with white background"
+      },
+      {
+        title: "Financial Documents",
+        description: "Last 3-6 months bank statement"
+      }
+    ]
+  },
+  {
+    id: "schengen-visa",
+    country: "Schengen",
+    processingTime: "5-10 working days",
+    startingPrice: 90,
+    type: "Tourist Visa",
+    requirements: [
+      "Valid passport (min 6 months)",
+      "Passport size photos",
+      "Bank statement (last 3 months)",
+      "Flight & Hotel booking"
+    ],
+    popular: false,
+    image: "/images/visa/schengen.jpg",
+    description: "Experience the culture and beauty of Schengen with our streamlined visa services.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection",
+      "Application processing",
+      "Embassy submission",
+      "Visa collection"
+    ],
+    additionalInfo: [
+      "Fast track processing available on request",
+      "Multiple entry options available for eligible applicants"
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months"
+      },
+      {
+        title: "Photographs",
+        description: "Recent passport-size photographs with white background"
+      },
+      {
+        title: "Financial Documents",
+        description: "Last 3-6 months bank statement"
+      }
+    ]
+  },
+  {
+    id: "japan-visa",
+    country: "Japan",
+    processingTime: "5-10 working days",
+    startingPrice: 40,
+    type: "Tourist Visa",
+    requirements: [
+      "Valid passport (min 6 months)",
+      "Passport size photos",
+      "Bank statement (last 3 months)",
+      "Flight & Hotel booking"
+    ],
+    popular: false,
+    image: "/images/visa/japan.jpg",
+    description: "Experience the culture and beauty of Japan with our streamlined visa services.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection",
+      "Application processing",
+      "Embassy submission",
+      "Visa collection"
+    ],
+    additionalInfo: [
+      "Fast track processing available on request",
+      "Multiple entry options available for eligible applicants"
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months"
+      },
+      {
+        title: "Photographs",
+        description: "Recent passport-size photographs with white background"
+      },
+      {
+        title: "Financial Documents",
+        description: "Last 3-6 months bank statement"
+      }
+    ]
+  },
+  {
+    id: "korea-visa",
+    country: "South Korea",
+    processingTime: "5-10 working days",
+    startingPrice: 50,
+    type: "Tourist Visa",
+    requirements: [
+      "Valid passport (min 6 months)",
+      "Passport size photos",
+      "Bank statement (last 3 months)",
+      "Flight & Hotel booking"
+    ],
+    popular: false,
+    image: "/images/visa/korea.jpg",
+    description: "Experience the culture and beauty of South Korea with our streamlined visa services.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection",
+      "Application processing",
+      "Embassy submission",
+      "Visa collection"
+    ],
+    additionalInfo: [
+      "Fast track processing available on request",
+      "Multiple entry options available for eligible applicants"
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months"
+      },
+      {
+        title: "Photographs",
+        description: "Recent passport-size photographs with white background"
+      },
+      {
+        title: "Financial Documents",
+        description: "Last 3-6 months bank statement"
+      }
+    ]
+  },
+  {
+    id: "vietnam-visa",
+    country: "Vietnam",
+    processingTime: "5-10 working days",
+    startingPrice: 30,
+    type: "Tourist Visa",
+    requirements: [
+      "Valid passport (min 6 months)",
+      "Passport size photos",
+      "Bank statement (last 3 months)",
+      "Flight & Hotel booking"
+    ],
+    popular: false,
+    image: "/images/visa/vietnam.jpg",
+    description: "Experience the culture and beauty of Vietnam with our streamlined visa services.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection",
+      "Application processing",
+      "Embassy submission",
+      "Visa collection"
+    ],
+    additionalInfo: [
+      "Fast track processing available on request",
+      "Multiple entry options available for eligible applicants"
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months"
+      },
+      {
+        title: "Photographs",
+        description: "Recent passport-size photographs with white background"
+      },
+      {
+        title: "Financial Documents",
+        description: "Last 3-6 months bank statement"
+      }
+    ]
+  },
+  {
+    id: "egypt-visa",
+    country: "Egypt",
+    processingTime: "5-10 working days",
+    startingPrice: 45,
+    type: "Tourist Visa",
+    requirements: [
+      "Valid passport (min 6 months)",
+      "Passport size photos",
+      "Bank statement (last 3 months)",
+      "Flight & Hotel booking"
+    ],
+    popular: false,
+    image: "/images/visa/egypt.jpg",
+    description: "Experience the culture and beauty of Egypt with our streamlined visa services.",
+    validityPeriod: "30-90 days",
+    processingSteps: [
+      "Document collection",
+      "Application processing",
+      "Embassy submission",
+      "Visa collection"
+    ],
+    additionalInfo: [
+      "Fast track processing available on request",
+      "Multiple entry options available for eligible applicants"
+    ],
+    documentsNeeded: [
+      {
+        title: "Passport",
+        description: "Original passport valid for at least 6 months"
+      },
+      {
+        title: "Photographs",
+        description: "Recent passport-size photographs with white background"
+      },
+      {
+        title: "Financial Documents",
+        description: "Last 3-6 months bank statement"
+      }
+    ]
+  }
 ];
