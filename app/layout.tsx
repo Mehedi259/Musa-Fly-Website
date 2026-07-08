@@ -86,9 +86,9 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} antialiased overflow-x-hidden max-w-full`}>
         <Navbar />
-        <main>{children}</main>
+        <main className="overflow-hidden">{children}</main>
         <Footer />
       </body>
     </html>
