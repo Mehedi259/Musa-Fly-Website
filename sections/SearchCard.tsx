@@ -140,7 +140,7 @@ export function SearchCard() {
         </div>
 
         {/* Main Card */}
-        <div className="bg-gradient-to-br from-primary-600/95 to-primary-900/95 backdrop-blur-xl rounded-[1.5rem] md:rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.2)] w-full max-w-[850px] pt-12 md:pt-16 px-3 md:px-8 pb-10 relative z-10 border border-white/10">
+        <div className="bg-gradient-to-br from-primary/95 via-primary-900/90 to-secondary/60 backdrop-blur-xl rounded-[1.5rem] md:rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.2)] w-full max-w-[850px] pt-12 md:pt-16 px-3 md:px-8 pb-10 relative z-10 border border-white/10">
           {activeTab === "flights" && (
             <FlightsForm
               from={flightFrom} setFrom={setFlightFrom}
