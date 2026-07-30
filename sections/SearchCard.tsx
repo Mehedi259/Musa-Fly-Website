@@ -2,7 +2,7 @@
 
 import { SITE_CONFIG } from "@/constants/config";
 import type { SearchTab } from "@/types";
-import { ArrowLeftRight, Calendar, Clock, MapPin, MessageCircle, Palmtree, Plane, Ticket, Users, X } from "lucide-react";
+import { ArrowLeftRight, Calendar, Clock, MapPin, MessageCircle, Palmtree, Plane, Ticket, Users, X, Moon } from "lucide-react";
 import { useState } from "react";
 
 // Airport data for FROM/TO dropdowns
@@ -131,12 +131,13 @@ export function SearchCard() {
 
   return (
     <>
-      <div className="w-full flex justify-center px-2 md:px-4 mt-8 md:mt-16 relative pb-8 md:pb-12">
+      <div className="w-full flex justify-center px-2 md:px-4 mt-0 md:mt-8 relative pb-8 md:pb-12">
         {/* Tabs */}
-        <div className="absolute -top-10 md:-top-12 left-1/2 -translate-x-1/2 bg-primary/90 backdrop-blur-md rounded-xl md:rounded-2xl shadow-xl flex z-20 overflow-hidden border border-white/10 p-1 md:p-1.5 gap-1">
+        <div className="absolute -top-9 md:-top-12 left-1/2 -translate-x-1/2 bg-primary/90 backdrop-blur-md rounded-xl md:rounded-2xl shadow-xl flex z-20 overflow-hidden border border-white/10 p-1 md:p-1.5 gap-0.5 md:gap-1">
           <TabButton icon={Plane} label="Flight" active={activeTab === "flights"} onClick={() => setActiveTab("flights")} />
           <TabButton icon={Palmtree} label="Tour" active={activeTab === "tours"} onClick={() => setActiveTab("tours")} />
           <TabButton icon={Ticket} label="Visa" active={activeTab === "visa"} onClick={() => setActiveTab("visa")} />
+          <TabButton icon={Moon} label="Umrah" active={activeTab === "umrah"} onClick={() => setActiveTab("umrah")} />
         </div>
 
         {/* Main Card */}
@@ -159,16 +160,19 @@ export function SearchCard() {
             />
           )}
           {activeTab === "visa" && <VisaForm country={visaCountry} setCountry={setVisaCountry} />}
+          {activeTab === "umrah" && <UmrahDetails />}
           
           {/* Search Button */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 w-[80%] md:w-auto">
-            <button 
-              onClick={handleSearch}
-              className="w-full bg-secondary hover:bg-secondary-600 text-white font-bold text-sm md:text-xl px-12 md:px-20 py-3 md:py-4 rounded-xl md:rounded-2xl shadow-lg transition-transform hover:scale-105"
-            >
-              Search
-            </button>
-          </div>
+          {activeTab !== "umrah" && (
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-20 w-[80%] md:w-auto">
+              <button 
+                onClick={handleSearch}
+                className="w-full bg-secondary hover:bg-secondary-600 text-white font-bold text-sm md:text-xl px-12 md:px-20 py-3 md:py-4 rounded-xl md:rounded-2xl shadow-lg transition-transform hover:scale-105"
+              >
+                Search
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -180,11 +184,67 @@ export function SearchCard() {
   );
 }
 
+function UmrahDetails() {
+  const handleWhatsApp = (message: string) => {
+    const encoded = encodeURIComponent(message);
+    window.open(`${SITE_CONFIG.whatsappLink}?text=${encoded}`, "_blank");
+  };
+
+  return (
+    <div className="space-y-4 md:space-y-6 text-white text-left p-2 md:p-4">
+      <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+        <div className="flex-1 space-y-4">
+          <h3 className="text-xl md:text-2xl font-bold text-secondary">Premium Umrah Packages</h3>
+          <p className="text-sm md:text-base text-white/80 leading-relaxed">
+            Experience a spiritually enriching journey with our comprehensive Umrah packages. We handle all the details so you can focus on your prayers.
+          </p>
+          
+          <div className="space-y-2">
+            <h4 className="font-semibold text-white">Required Documents:</h4>
+            <ul className="list-disc list-inside text-sm md:text-base text-white/70 space-y-1">
+              <li>Original Passport (valid for at least 6 months)</li>
+              <li>2 Passport size photographs (white background)</li>
+              <li>NID / Smart Card copy</li>
+              <li>Vaccination Certificate</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div className="flex-1 space-y-4 bg-white/5 p-4 md:p-6 rounded-2xl border border-white/10">
+          <div className="space-y-2">
+            <h4 className="font-semibold text-white">Package Inclusions:</h4>
+            <ul className="list-disc list-inside text-sm md:text-base text-white/70 space-y-1">
+              <li>Umrah Visa processing</li>
+              <li>Return Air Tickets</li>
+              <li>Hotel Accommodation (Makkah & Madinah)</li>
+              <li>Transportation in Saudi Arabia</li>
+              <li>Ziyarah (Sightseeing)</li>
+            </ul>
+          </div>
+          
+          <div className="pt-4 border-t border-white/10">
+            <div className="text-sm text-white/70">Packages starting from</div>
+            <div className="text-2xl md:text-3xl font-bold text-primary mb-4">৳ 1,45,000</div>
+            
+            <button
+              onClick={() => handleWhatsApp("Hi MusaFly! I'm interested in the Umrah packages. Could you provide more details regarding pricing, hotels, and available dates?")}
+              className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-sm md:text-base px-6 py-3 rounded-xl flex items-center justify-center gap-2 transition-all"
+            >
+              <MessageCircle className="w-5 h-5" />
+              Contact for Details
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function TabButton({ icon: Icon, label, active, onClick }: { icon: React.ElementType; label: string; active: boolean; onClick: () => void }) {
   return (
-    <button onClick={onClick} className={`flex flex-col items-center justify-center gap-1 min-w-[70px] md:min-w-[95px] px-3 md:px-5 py-2 md:py-3 rounded-lg md:rounded-xl relative transition-all duration-300 ${active ? "bg-white text-primary shadow-md" : "text-white/70 hover:text-white hover:bg-white/10"}`}>
-      <Icon className={`w-5 h-5 md:w-6 md:h-6 ${active ? "text-primary" : "text-white/70"}`} strokeWidth={1.5} />
-      <span className="font-bold text-xs md:text-[13px]">{label}</span>
+    <button onClick={onClick} className={`flex flex-col items-center justify-center gap-0.5 md:gap-1 min-w-[64px] md:min-w-[95px] px-2 md:px-5 py-1.5 md:py-3 rounded-lg md:rounded-xl relative transition-all duration-300 ${active ? "bg-white text-primary shadow-md" : "text-white/70 hover:text-white hover:bg-white/10"}`}>
+      <Icon className={`w-4 h-4 md:w-6 md:h-6 ${active ? "text-primary" : "text-white/70"}`} strokeWidth={1.5} />
+      <span className="font-bold text-[11px] md:text-[13px]">{label}</span>
     </button>
   );
 }

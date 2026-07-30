@@ -19,7 +19,7 @@ export function HeroSection() {
       </div>
 
       {/* Hero Content */}
-      <div className="container mx-auto px-4 relative z-10 pt-32 pb-16 flex-1 flex flex-col justify-center">
+      <div className="container mx-auto px-4 relative z-10 pt-16 md:pt-32 pb-4 md:pb-8 flex flex-col">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -30,7 +30,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6"
+            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-2 md:mb-6"
           >
             Discover Your Next
             <br />
@@ -42,7 +42,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto"
+            className="hidden md:block text-lg sm:text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto"
           >
             Your journey begins here. Book flights, plan tours, and get your visa
             with ease.
@@ -51,7 +51,7 @@ export function HeroSection() {
       </div>
 
       {/* Search Card Inside Hero */}
-      <div className="container mx-auto relative z-20 px-4 mt-auto">
+      <div className="container mx-auto relative z-20 px-4 mt-12 md:mt-8 mb-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
