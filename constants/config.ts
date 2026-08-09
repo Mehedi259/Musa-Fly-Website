@@ -8,7 +8,7 @@ export const SITE_CONFIG = {
   whatsappLink: "https://wa.me/8801331205412",
   email: "contact@musafly.com",
   phone: "+880 1331-205 412",
-  address: "Mirpur 11, A Block, Dhaka 1216",
+  address: "Muscat, Sultanate Of Oman",
   socialMedia: {
     facebook: "https://facebook.com/musafly",
     instagram: "https://instagram.com/musafly",

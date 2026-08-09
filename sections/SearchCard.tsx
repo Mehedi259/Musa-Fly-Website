@@ -93,6 +93,8 @@ export function SearchCard() {
   const [tourDuration, setTourDuration] = useState("5 Days / 4 Nights");
   const [tourTravelers, setTourTravelers] = useState("2 People");
 
+  const [baggage, setBaggage] = useState("20 KG Checked Baggage");
+
   const handleSearch = () => {
     if (activeTab === "flights") {
       const results = generateFlightResults(flightFrom, flightTo, flightDate);
@@ -107,6 +109,7 @@ export function SearchCard() {
           date: flightDate,
           tripType: flightTripType,
           travelers: flightTravelers,
+          baggage,
         },
       });
     } else if (activeTab === "tours") {
@@ -120,6 +123,7 @@ export function SearchCard() {
           date: tourDate,
           duration: tourDuration,
           travelers: tourTravelers,
+          baggage,
         },
       });
     } else if (activeTab === "visa") {
@@ -161,6 +165,18 @@ export function SearchCard() {
           )}
           {activeTab === "visa" && <VisaForm country={visaCountry} setCountry={setVisaCountry} />}
           {activeTab === "umrah" && <UmrahDetails />}
+          
+          {activeTab !== "umrah" && (
+            <div className="mt-4 md:mt-6 mb-8 md:mb-12 border flex flex-col items-center text-center border-white/20 bg-white/5 rounded-xl md:rounded-2xl p-2 md:p-4 hover:border-secondary transition-colors cursor-text">
+              <div className="text-[9px] md:text-xs text-white/70 uppercase tracking-wide font-medium mb-0.5 md:mb-1.5">BAGGAGE / LUGGAGE</div>
+              <select value={baggage} onChange={(e) => setBaggage(e.target.value)} className="w-full text-center text-sm md:text-xl font-bold text-white bg-transparent outline-none cursor-pointer appearance-none">
+                <option className="text-gray-900 text-center">Cabin Baggage Only (7 KG)</option>
+                <option className="text-gray-900 text-center">20 KG Checked Baggage</option>
+                <option className="text-gray-900 text-center">30 KG Checked Baggage</option>
+                <option className="text-gray-900 text-center">40 KG Checked Baggage</option>
+              </select>
+            </div>
+          )}
           
           {/* Search Button */}
           {activeTab !== "umrah" && (
@@ -223,9 +239,6 @@ function UmrahDetails() {
           </div>
           
           <div className="pt-4 border-t border-white/10">
-            <div className="text-sm text-white/70">Packages starting from</div>
-            <div className="text-2xl md:text-3xl font-bold text-primary mb-4">৳ 1,45,000</div>
-            
             <button
               onClick={() => handleWhatsApp("Hi MusaFly! I'm interested in the Umrah packages. Could you provide more details regarding pricing, hotels, and available dates?")}
               className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-sm md:text-base px-6 py-3 rounded-xl flex items-center justify-center gap-2 transition-all"
@@ -473,8 +486,8 @@ function SearchResultsModal({ result, onClose }: { result: SearchResult; onClose
             </h2>
             <p className="text-white/80 text-xs md:text-sm">
               {result.type === "flights"
-                ? `${result.searchParams.from} → ${result.searchParams.to} • ${result.searchParams.date} • ${result.searchParams.travelers}`
-                : `${result.searchParams.destination} • ${result.searchParams.duration} • ${result.searchParams.travelers}`
+                ? `${result.searchParams.from} → ${result.searchParams.to} • ${result.searchParams.date} • ${result.searchParams.travelers} • ${result.searchParams.baggage}`
+                : `${result.searchParams.destination} • ${result.searchParams.duration} • ${result.searchParams.travelers} • ${result.searchParams.baggage}`
               }
             </p>
           </div>
@@ -513,15 +526,11 @@ function SearchResultsModal({ result, onClose }: { result: SearchResult; onClose
                   </div>
                 </div>
                 
-                {/* Price & CTA */}
+                {/* CTA */}
                 <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-2 md:gap-3 border-t md:border-t-0 md:border-l border-gray-100 pt-3 md:pt-0 md:pl-6">
-                  <div>
-                    <div className="text-lg md:text-2xl font-bold text-primary">{flight.price}</div>
-                    <div className="text-[9px] md:text-xs text-gray-400">per person</div>
-                  </div>
                   <button
-                    onClick={() => handleWhatsApp(`Hi MusaFly! I'm interested in booking a flight:\n✈️ ${flight.from} (${flight.fromCode}) → ${flight.to} (${flight.toCode})\n📅 Date: ${flight.date}\n🕐 Time: ${flight.departure} - ${flight.arrival}\n✈️ Airline: ${flight.airline}\n💰 Price: ${flight.price}\n👤 ${result.searchParams.travelers}\n\nPlease provide more details.`)}
-                    className="bg-green-500 hover:bg-green-600 text-white text-xs md:text-sm font-bold px-3 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl flex items-center gap-1.5 transition-colors whitespace-nowrap"
+                    onClick={() => handleWhatsApp(`Hi MusaFly! I'm interested in booking a flight:\n✈️ ${flight.from} (${flight.fromCode}) → ${flight.to} (${flight.toCode})\n📅 Date: ${flight.date}\n🕐 Time: ${flight.departure} - ${flight.arrival}\n✈️ Airline: ${flight.airline}\n👤 ${result.searchParams.travelers}\n🧳 ${result.searchParams.baggage}\n\nPlease provide more details.`)}
+                    className="bg-green-500 hover:bg-green-600 text-white text-xs md:text-sm font-bold px-3 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl flex items-center gap-1.5 transition-colors whitespace-nowrap w-full md:w-auto justify-center"
                   >
                     <MessageCircle className="w-3.5 h-3.5 md:w-4 md:h-4" />
                     Contact WhatsApp
@@ -552,16 +561,11 @@ function SearchResultsModal({ result, onClose }: { result: SearchResult; onClose
                   </div>
                 </div>
                 
-                {/* Price & CTA */}
+                {/* CTA */}
                 <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-2 md:gap-3 border-t md:border-t-0 md:border-l border-gray-100 pt-3 md:pt-0 md:pl-6">
-                  <div>
-                    <div className="text-[9px] md:text-xs text-gray-400">Starting from</div>
-                    <div className="text-lg md:text-2xl font-bold text-primary">{tour.price}</div>
-                    <div className="text-[9px] md:text-xs text-gray-400">per person</div>
-                  </div>
                   <button
-                    onClick={() => handleWhatsApp(`Hi MusaFly! I'm interested in a tour package:\n🌴 Destination: ${tour.destination}\n📅 Duration: ${tour.duration}\n💰 Price: ${tour.price}\n👤 ${result.searchParams.travelers}\n${result.searchParams.date ? `📆 Preferred Date: ${result.searchParams.date}\n` : ""}\nPlease provide more details.`)}
-                    className="bg-green-500 hover:bg-green-600 text-white text-xs md:text-sm font-bold px-3 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl flex items-center gap-1.5 transition-colors whitespace-nowrap"
+                    onClick={() => handleWhatsApp(`Hi MusaFly! I'm interested in a tour package:\n🌴 Destination: ${tour.destination}\n📅 Duration: ${tour.duration}\n👤 ${result.searchParams.travelers}\n🧳 ${result.searchParams.baggage}\n${result.searchParams.date ? `📆 Preferred Date: ${result.searchParams.date}\n` : ""}\nPlease provide more details.`)}
+                    className="bg-green-500 hover:bg-green-600 text-white text-xs md:text-sm font-bold px-3 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl flex items-center gap-1.5 transition-colors whitespace-nowrap w-full md:w-auto justify-center"
                   >
                     <MessageCircle className="w-3.5 h-3.5 md:w-4 md:h-4" />
                     Contact WhatsApp
