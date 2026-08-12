@@ -4,10 +4,10 @@ export const SITE_CONFIG = {
     "Your trusted travel partner for flights, tours, and visa services. Experience premium travel with MusaFly.",
   url: "https://www.musafly.com",
   ogImage: "https://www.musafly.com/og-image.jpg",
-  whatsappNumber: "8801331205412", // WhatsApp number from ID card
-  whatsappLink: "https://wa.me/8801331205412",
+  whatsappNumber: "96895923226", // WhatsApp number from ID card
+  whatsappLink: "https://wa.me/96895923226",
   email: "contact@musafly.com",
-  phone: "+880 1331-205 412",
+  phone: "+968 95923226",
   address: "Muscat, Sultanate Of Oman",
   socialMedia: {
     facebook: "https://facebook.com/musafly",
