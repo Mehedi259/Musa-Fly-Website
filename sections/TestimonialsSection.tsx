@@ -1,13 +1,29 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/Card";
-import { testimonials } from "@/data/testimonials";
 import { motion } from "framer-motion";
 import { Quote, Star } from "lucide-react";
-import { useState } from "react";
+import { SITE_CONFIG } from "@/constants/config";
+import axios from "axios";
 
 export function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [testimonials, setTestimonials] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${SITE_CONFIG.apiUrl}testimonials/`);
+        setTestimonials(res.data);
+      } catch (err) {
+        console.error("Failed to fetch testimonials", err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (testimonials.length === 0) return null;
 
   return (
     <section className="py-20 bg-gradient-to-br from-primary/5 to-white">
@@ -65,7 +81,7 @@ export function TestimonialsSection() {
   );
 }
 
-function TestimonialCard({ testimonial }: { testimonial: typeof testimonials[0] }) {
+function TestimonialCard({ testimonial }: { testimonial: any }) {
   return (
     <Card className="h-full hover:shadow-xl transition-shadow">
       <CardContent className="p-6">

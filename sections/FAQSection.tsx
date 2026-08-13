@@ -1,12 +1,31 @@
 "use client";
 
-import { faqs } from "@/data/faq";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { SITE_CONFIG } from "@/constants/config";
+import axios from "axios";
 
 export function FAQSection() {
-  const [openId, setOpenId] = useState<string | null>(faqs[0]?.id || null);
+  const [faqs, setFaqs] = useState<any[]>([]);
+  const [openId, setOpenId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${SITE_CONFIG.apiUrl}faqs/`);
+        setFaqs(res.data);
+        if (res.data.length > 0) {
+          setOpenId(res.data[0].id);
+        }
+      } catch (err) {
+        console.error("Failed to fetch FAQs", err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (faqs.length === 0) return null;
 
   return (
     <section className="py-20 bg-white">

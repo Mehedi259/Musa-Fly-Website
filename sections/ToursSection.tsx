@@ -1,14 +1,43 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/Card";
 import { SITE_CONFIG } from "@/constants/config";
-import { destinations } from "@/data/destinations";
 import { formatPrice } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { MapPin, Package } from "lucide-react";
 
+interface Tour {
+  id: number;
+  destination: string;
+  duration: string;
+  price: string;
+  inclusions: string;
+  image_url: string;
+}
+
 export function ToursSection() {
+  const [tours, setTours] = useState<Tour[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchTours() {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://46.225.103.236:8001/api'}/tours/`);
+        if (res.ok) {
+          const data = await res.json();
+          setTours(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch tours:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchTours();
+  }, []);
+
   const handleExplore = () => {
     window.open(SITE_CONFIG.whatsappLink, "_blank");
   };
@@ -31,81 +60,73 @@ export function ToursSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {destinations.map((destination, index) => (
-            <motion.div
-              key={destination.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
-                <div className="relative h-64 overflow-hidden">
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-300 hover:scale-110"
-                    style={{
-                      backgroundImage:
-                        destination.id === "singapore"
-                          ? "url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=2852')"
-                          : destination.id === "malaysia"
-                            ? "url('https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=2864')"
-                            : destination.id === "oman"
-                              ? "url('https://images.unsplash.com/photo-1547304638-aa0a7b5aae3d?q=80&w=2940')"
-                              : "url('https://images.unsplash.com/photo-1566552881560-0be862a7c445?q=80&w=2787')",
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent" />
-                  {destination.popular && (
-                    <div className="absolute top-4 right-4 bg-secondary text-white px-3 py-1 rounded-full text-xs font-semibold">
-                      Popular
-                    </div>
-                  )}
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-2xl font-bold text-white mb-1">
-                      {destination.name}
-                    </h3>
-                    <div className="flex items-center text-white/90 text-sm">
-                      <MapPin className="w-4 h-4 mr-1" />
-                      {destination.country}
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {tours.map((tour, index) => (
+              <motion.div
+                key={tour.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
+                  <div className="relative h-64 overflow-hidden">
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-300 hover:scale-110"
+                      style={{ backgroundImage: `url('${tour.image_url}')` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <h3 className="text-2xl font-bold text-white mb-1">
+                        {tour.destination}
+                      </h3>
+                      <div className="flex items-center text-white/90 text-sm">
+                        <MapPin className="w-4 h-4 mr-1" />
+                        {tour.destination}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <CardHeader>
-                  <CardDescription className="line-clamp-2">
-                    {destination.description}
-                  </CardDescription>
-                </CardHeader>
+                  <CardHeader>
+                    <CardDescription className="line-clamp-2">
+                      {tour.inclusions}
+                    </CardDescription>
+                  </CardHeader>
 
-                <CardContent className="flex-grow">
-                  <div className="space-y-2">
-                    <div className="flex items-center text-sm text-gray-600">
-                      <Package className="w-4 h-4 mr-2 text-primary" />
-                      {destination.tourPackages} packages available
+                  <CardContent className="flex-grow">
+                    <div className="space-y-2">
+                      <div className="flex items-center text-sm text-gray-600">
+                        <Package className="w-4 h-4 mr-2 text-primary" />
+                        {tour.duration}
+                      </div>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-sm text-gray-600">Starting from</span>
+                        <span className="text-2xl font-bold text-primary">
+                          {formatPrice(parseFloat(tour.price))}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-sm text-gray-600">Starting from</span>
-                      <span className="text-2xl font-bold text-primary">
-                        {formatPrice(destination.startingPrice)}
-                      </span>
-                    </div>
-                  </div>
-                </CardContent>
+                  </CardContent>
 
-                <CardFooter>
-                  <Button
-                    variant="primary"
-                    className="w-full"
-                    onClick={handleExplore}
-                  >
-                    Explore Tours
-                  </Button>
-                </CardFooter>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+                  <CardFooter>
+                    <Button
+                      variant="primary"
+                      className="w-full"
+                      onClick={handleExplore}
+                    >
+                      Explore Tours
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
