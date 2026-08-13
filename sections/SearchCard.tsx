@@ -201,8 +201,9 @@ export function SearchCard() {
 }
 
 function UmrahDetails() {
-  const [packages, setPackages] = useState<any[]>([]);
+  const [packageData, setPackageData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     async function fetchPackages() {
@@ -210,7 +211,10 @@ function UmrahDetails() {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/umrah/`);
         if (res.ok) {
           const data = await res.json();
-          setPackages(data);
+          if (data && data.length > 0) {
+            // Assume we take the last added package
+            setPackageData(data[data.length - 1]);
+          }
         }
       } catch (error) {
         console.error("Failed to fetch umrah packages:", error);
@@ -221,76 +225,99 @@ function UmrahDetails() {
     fetchPackages();
   }, []);
 
-  const handleWhatsApp = (pkgName?: string) => {
-    const message = pkgName 
-      ? `Hi MusaFly! I'm interested in the ${pkgName} package. Could you provide more details regarding pricing, hotels, and available dates?`
+  const handleWhatsApp = () => {
+    const message = packageData 
+      ? `Hi MusaFly! I'm interested in the ${packageData.package_name} package. Could you provide more details regarding pricing, hotels, and available dates?`
       : "Hi MusaFly! I'm interested in the Umrah packages. Could you provide more details regarding pricing, hotels, and available dates?";
     const encoded = encodeURIComponent(message);
     window.open(`${SITE_CONFIG.whatsappLink}?text=${encoded}`, "_blank");
   };
 
   return (
-    <div className="space-y-4 md:space-y-6 text-white text-left p-2 md:p-4">
-      <div className="flex flex-col md:flex-row gap-6 md:gap-8">
-        <div className="flex-1 space-y-4">
-          <h3 className="text-xl md:text-2xl font-bold text-secondary">Premium Umrah Packages</h3>
-          <p className="text-sm md:text-base text-white/80 leading-relaxed">
-            Experience a spiritually enriching journey with our comprehensive Umrah packages. We handle all the details so you can focus on your prayers.
-          </p>
-          
-          <div className="space-y-2">
-            <h4 className="font-semibold text-white">Required Documents:</h4>
-            <ul className="list-disc list-inside text-sm md:text-base text-white/70 space-y-1">
-              <li>Original Passport (valid for at least 6 months)</li>
-              <li>2 Passport size photographs (white background)</li>
-              <li>NID / Smart Card copy</li>
-              <li>Vaccination Certificate</li>
-            </ul>
-          </div>
-        </div>
-        
-        <div className="flex-1 space-y-4 bg-white/5 p-4 md:p-6 rounded-2xl border border-white/10 flex flex-col max-h-[400px]">
-          <h4 className="font-semibold text-white">Available Packages:</h4>
-          
-          <div className="flex-1 overflow-y-auto pr-2 space-y-3 min-h-0">
-            {loading ? (
-               <div className="flex justify-center items-center py-8">
-                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-               </div>
-            ) : packages.length > 0 ? (
-                 packages.map(pkg => (
-                   <div key={pkg.id} className="bg-white/10 p-3 md:p-4 rounded-xl border border-white/10">
-                     <div className="flex justify-between items-start mb-2">
-                       <h5 className="font-bold text-white text-sm md:text-base">{pkg.package_name}</h5>
-                       <span className="text-secondary font-bold text-sm md:text-base whitespace-nowrap ml-2">OMR {pkg.price}</span>
-                     </div>
-                     <p className="text-xs text-white/70 mb-3 line-clamp-2">{pkg.inclusions}</p>
-                     <button
-                       onClick={() => handleWhatsApp(pkg.package_name)}
-                       className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-xs md:text-sm px-4 py-2 rounded-lg flex items-center justify-center gap-1.5 transition-all"
-                     >
-                       <MessageCircle className="w-4 h-4" />
-                       Book Now
-                     </button>
-                   </div>
-                 ))
-            ) : (
-              <div className="text-white/70 text-sm">No packages currently available.</div>
-            )}
+    <>
+      <div className="space-y-4 md:space-y-6 text-white text-left p-2 md:p-4">
+        <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+          <div className="flex-1 space-y-4">
+            <h3 className="text-xl md:text-2xl font-bold text-secondary">
+              {loading ? "Loading..." : packageData ? packageData.package_name : "Premium Umrah Packages"}
+            </h3>
+            <p className="text-sm md:text-base text-white/80 leading-relaxed line-clamp-3">
+              {packageData ? packageData.inclusions : "Experience a spiritually enriching journey with our comprehensive Umrah packages. We handle all the details so you can focus on your prayers."}
+            </p>
+            
+            <div className="space-y-2">
+              <h4 className="font-semibold text-white">Required Documents:</h4>
+              <ul className="list-disc list-inside text-sm md:text-base text-white/70 space-y-1">
+                <li>Original Passport (valid for at least 6 months)</li>
+                <li>2 Passport size photographs (white background)</li>
+                <li>NID / Smart Card copy</li>
+                <li>Vaccination Certificate</li>
+              </ul>
+            </div>
           </div>
           
-          <div className="pt-4 border-t border-white/10 mt-auto">
-            <button
-              onClick={() => handleWhatsApp()}
-              className="w-full bg-secondary hover:bg-secondary-600 text-white font-bold text-sm md:text-base px-6 py-3 rounded-xl flex items-center justify-center gap-2 transition-all"
-            >
-              <MessageCircle className="w-5 h-5" />
-              General Inquiry
-            </button>
+          <div className="flex-1 flex flex-col justify-center items-center bg-white/5 p-6 md:p-8 rounded-2xl border border-white/10 space-y-6">
+            <div className="text-center">
+              <div className="text-white/70 text-sm uppercase tracking-wider mb-2">Available Package</div>
+              {loading ? (
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+              ) : packageData ? (
+                <>
+                  <div className="text-2xl font-bold text-white mb-2">{packageData.package_name}</div>
+                  <div className="text-secondary font-bold text-xl">OMR {packageData.price}</div>
+                </>
+              ) : (
+                <div className="text-white/70 text-sm">No packages currently available.</div>
+              )}
+            </div>
+            
+            <div className="w-full space-y-3">
+              <button
+                onClick={() => setShowModal(true)}
+                disabled={!packageData}
+                className="w-full bg-primary/20 border border-primary hover:bg-primary/40 text-white font-bold text-sm md:text-base px-6 py-3 rounded-xl transition-all disabled:opacity-50"
+              >
+                View Details
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Pop-up Modal */}
+      {showModal && packageData && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" onClick={() => setShowModal(false)}>
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-in" onClick={e => e.stopPropagation()}>
+            <div className="bg-primary text-white p-6 relative">
+              <h2 className="text-2xl font-bold pr-8">{packageData.package_name}</h2>
+              <button onClick={() => setShowModal(false)} className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-black/10 hover:bg-black/20 transition">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-6 max-h-[60vh] overflow-y-auto">
+              <div className="mb-6">
+                <h4 className="font-bold text-gray-900 mb-2">Package Price:</h4>
+                <p className="text-2xl font-bold text-secondary">OMR {packageData.price}</p>
+              </div>
+              <div className="mb-8">
+                <h4 className="font-bold text-gray-900 mb-2">Package Inclusions:</h4>
+                <p className="text-gray-700 whitespace-pre-line leading-relaxed">{packageData.inclusions}</p>
+              </div>
+              <button
+                onClick={() => {
+                  setShowModal(false);
+                  handleWhatsApp();
+                }}
+                className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg px-6 py-4 rounded-xl flex items-center justify-center gap-2 transition-all"
+              >
+                <MessageCircle className="w-6 h-6" />
+                Book Now
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
