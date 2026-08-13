@@ -24,7 +24,7 @@ export function ToursSection() {
   useEffect(() => {
     async function fetchTours() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://46.225.103.236:8001/api'}/tours/`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/tours/`);
         if (res.ok) {
           const data = await res.json();
           setTours(data);

@@ -14,7 +14,7 @@ export function TestimonialsSection() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://46.225.103.236:8001/api/testimonials/`);
+        const res = await axios.get(`/api/testimonials/`);
         setTestimonials(res.data);
       } catch (err) {
         console.error("Failed to fetch testimonials", err);

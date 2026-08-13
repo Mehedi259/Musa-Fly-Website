@@ -22,7 +22,7 @@ export function HotDealsSection() {
   useEffect(() => {
     async function fetchDeals() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://46.225.103.236:8001/api'}/umrah/`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/umrah/`);
         if (res.ok) {
           const data = await res.json();
           setDeals(data);

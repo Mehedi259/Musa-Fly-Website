@@ -24,7 +24,7 @@ export function VisaSection() {
   useEffect(() => {
     async function fetchVisas() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://46.225.103.236:8001/api'}/visas/`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/visas/`);
         if (res.ok) {
           const data = await res.json();
           setVisas(data);

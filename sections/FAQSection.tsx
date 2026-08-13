@@ -13,7 +13,7 @@ export function FAQSection() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://46.225.103.236:8001/api/faqs/`);
+        const res = await axios.get(`/api/faqs/`);
         setFaqs(res.data);
         if (res.data.length > 0) {
           setOpenId(res.data[0].id);
