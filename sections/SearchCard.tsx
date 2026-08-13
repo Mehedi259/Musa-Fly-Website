@@ -3,7 +3,7 @@
 import { SITE_CONFIG } from "@/constants/config";
 import type { SearchTab } from "@/types";
 import { ArrowLeftRight, Calendar, Clock, MapPin, MessageCircle, Palmtree, Plane, Ticket, Users, X, Moon } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Airport data for FROM/TO dropdowns
 const AIRPORTS = [
@@ -201,7 +201,30 @@ export function SearchCard() {
 }
 
 function UmrahDetails() {
-  const handleWhatsApp = (message: string) => {
+  const [packages, setPackages] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPackages() {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/umrah/`);
+        if (res.ok) {
+          const data = await res.json();
+          setPackages(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch umrah packages:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchPackages();
+  }, []);
+
+  const handleWhatsApp = (pkgName?: string) => {
+    const message = pkgName 
+      ? `Hi MusaFly! I'm interested in the ${pkgName} package. Could you provide more details regarding pricing, hotels, and available dates?`
+      : "Hi MusaFly! I'm interested in the Umrah packages. Could you provide more details regarding pricing, hotels, and available dates?";
     const encoded = encodeURIComponent(message);
     window.open(`${SITE_CONFIG.whatsappLink}?text=${encoded}`, "_blank");
   };
@@ -226,25 +249,43 @@ function UmrahDetails() {
           </div>
         </div>
         
-        <div className="flex-1 space-y-4 bg-white/5 p-4 md:p-6 rounded-2xl border border-white/10">
-          <div className="space-y-2">
-            <h4 className="font-semibold text-white">Package Inclusions:</h4>
-            <ul className="list-disc list-inside text-sm md:text-base text-white/70 space-y-1">
-              <li>Umrah Visa processing</li>
-              <li>Return Air Tickets</li>
-              <li>Hotel Accommodation (Makkah & Madinah)</li>
-              <li>Transportation in Saudi Arabia</li>
-              <li>Ziyarah (Sightseeing)</li>
-            </ul>
+        <div className="flex-1 space-y-4 bg-white/5 p-4 md:p-6 rounded-2xl border border-white/10 flex flex-col max-h-[400px]">
+          <h4 className="font-semibold text-white">Available Packages:</h4>
+          
+          <div className="flex-1 overflow-y-auto pr-2 space-y-3 min-h-0">
+            {loading ? (
+               <div className="flex justify-center items-center py-8">
+                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+               </div>
+            ) : packages.length > 0 ? (
+                 packages.map(pkg => (
+                   <div key={pkg.id} className="bg-white/10 p-3 md:p-4 rounded-xl border border-white/10">
+                     <div className="flex justify-between items-start mb-2">
+                       <h5 className="font-bold text-white text-sm md:text-base">{pkg.package_name}</h5>
+                       <span className="text-secondary font-bold text-sm md:text-base whitespace-nowrap ml-2">OMR {pkg.price}</span>
+                     </div>
+                     <p className="text-xs text-white/70 mb-3 line-clamp-2">{pkg.inclusions}</p>
+                     <button
+                       onClick={() => handleWhatsApp(pkg.package_name)}
+                       className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-xs md:text-sm px-4 py-2 rounded-lg flex items-center justify-center gap-1.5 transition-all"
+                     >
+                       <MessageCircle className="w-4 h-4" />
+                       Book Now
+                     </button>
+                   </div>
+                 ))
+            ) : (
+              <div className="text-white/70 text-sm">No packages currently available.</div>
+            )}
           </div>
           
-          <div className="pt-4 border-t border-white/10">
+          <div className="pt-4 border-t border-white/10 mt-auto">
             <button
-              onClick={() => handleWhatsApp("Hi MusaFly! I'm interested in the Umrah packages. Could you provide more details regarding pricing, hotels, and available dates?")}
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-bold text-sm md:text-base px-6 py-3 rounded-xl flex items-center justify-center gap-2 transition-all"
+              onClick={() => handleWhatsApp()}
+              className="w-full bg-secondary hover:bg-secondary-600 text-white font-bold text-sm md:text-base px-6 py-3 rounded-xl flex items-center justify-center gap-2 transition-all"
             >
               <MessageCircle className="w-5 h-5" />
-              Contact for Details
+              General Inquiry
             </button>
           </div>
         </div>

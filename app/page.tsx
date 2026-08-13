@@ -1,7 +1,7 @@
 import { ContactSection } from "@/sections/ContactSection";
 import { FAQSection } from "@/sections/FAQSection";
 import { HeroSection } from "@/sections/HeroSection";
-import { HotDealsSection } from "@/sections/HotDealsSection";
+
 import { TestimonialsSection } from "@/sections/TestimonialsSection";
 import { ToursSection } from "@/sections/ToursSection";
 import { VisaSection } from "@/sections/VisaSection";
@@ -13,7 +13,7 @@ export default function HomePage() {
       <HeroSection />
       <ToursSection />
       <VisaSection />
-      <HotDealsSection />
+
       <WhyChooseUsSection />
       <TestimonialsSection />
       <FAQSection />
