@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: VisaPageProps): Promise<Metad
 
   return {
     title: `${visaService.country} ${visaService.type} - MusaFly`,
-    description: `Apply for ${visaService.country} ${visaService.type}. Processing time: ${visaService.processingTime}. Starting from $${visaService.startingPrice}.`,
+    description: `Apply for ${visaService.country} ${visaService.type}. Processing time: ${visaService.processingTime}. Starting from OMR ${visaService.startingPrice}.`,
   };
 }
 

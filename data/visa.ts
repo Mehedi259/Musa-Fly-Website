@@ -58,7 +58,7 @@ export const visaServices: VisaService[] = [
       },
       {
         title: "Bank Statement",
-        description: "Last 3 months bank statement showing sufficient funds (minimum $3000)",
+        description: "Last 3 months bank statement showing sufficient funds (minimum OMR 3000)",
       },
       {
         title: "Flight Tickets",
@@ -114,7 +114,7 @@ export const visaServices: VisaService[] = [
       },
       {
         title: "Financial Proof",
-        description: "Bank statement showing minimum $2000 balance",
+        description: "Bank statement showing minimum OMR 2000 balance",
       },
       {
         title: "Travel Itinerary",
