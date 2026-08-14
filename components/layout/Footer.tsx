@@ -164,6 +164,18 @@ export function Footer() {
                 </a>
               </li>
             </ul>
+            <div className="mt-6 pt-6 border-t border-gray-800">
+              <h4 className="text-sm font-semibold text-white mb-3">Contact for Advertisement</h4>
+              <a
+                href="https://wa.me/96878147442?text=I%20want%20to%20give%20an%20advertisement"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-3 text-gray-400 hover:text-primary transition-colors text-sm"
+              >
+                <MessageCircle className="w-5 h-5 text-primary flex-shrink-0" />
+                <span>+968 78147442 (WhatsApp)</span>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -171,7 +183,8 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm text-center md:text-left">
-              © {currentYear} {SITE_CONFIG.name}. All rights reserved.
+              © {currentYear} {SITE_CONFIG.name}. All rights reserved.<br/>
+              <span className="text-xs mt-1 block text-gray-500">Developed by Hello Oman Tech</span>
             </p>
             <div className="flex space-x-6 text-sm">
               <Link href="/privacy" className="text-gray-400 hover:text-primary transition-colors">
