@@ -28,57 +28,10 @@ const AIRPORTS = [
   { code: "MLE", city: "Malé", name: "Velana International Airport" },
 ];
 
-// Tour packages data
-const TOUR_PACKAGES = [
-  { destination: "Singapore", duration: "5 Days / 4 Nights", price: "৳45,000", highlights: ["Marina Bay", "Sentosa Island", "Gardens by the Bay", "Universal Studios"] },
-  { destination: "Malaysia", duration: "5 Days / 4 Nights", price: "৳38,000", highlights: ["Petronas Towers", "Langkawi", "Genting Highlands", "Batu Caves"] },
-  { destination: "Thailand", duration: "5 Days / 4 Nights", price: "৳35,000", highlights: ["Grand Palace", "Phi Phi Islands", "Floating Market", "Pattaya"] },
-  { destination: "Maldives", duration: "5 Days / 4 Nights", price: "৳65,000", highlights: ["Water Villas", "Snorkeling", "Dolphin Watching", "Beach BBQ"] },
-  { destination: "Dubai", duration: "5 Days / 4 Nights", price: "৳55,000", highlights: ["Burj Khalifa", "Desert Safari", "Dubai Mall", "Palm Jumeirah"] },
-  { destination: "Oman", duration: "5 Days / 4 Nights", price: "৳48,000", highlights: ["Sultan Qaboos Mosque", "Wadi Shab", "Muscat Old Town", "Wahiba Sands"] },
-  { destination: "Bangladesh", duration: "3 Days / 2 Nights", price: "৳15,000", highlights: ["Cox's Bazar", "Sundarbans", "Sajek Valley", "Bandarban"] },
-];
-
-// Flight results mock data generator
-function generateFlightResults(from: string, to: string, date: string) {
-  const airlines = ["Biman Bangladesh", "US-Bangla Airlines", "Novoair", "Air Astra"];
-  const results = [];
-  const fromAirport = AIRPORTS.find(a => a.code === from);
-  const toAirport = AIRPORTS.find(a => a.code === to);
-  
-  for (let i = 0; i < 3; i++) {
-    const depHour = 6 + i * 4;
-    const arrHour = depHour + 1 + Math.floor(Math.random() * 2);
-    const basePrice = 3500 + Math.floor(Math.random() * 4000);
-    results.push({
-      id: i + 1,
-      airline: airlines[i % airlines.length],
-      from: fromAirport?.city || from,
-      fromCode: from,
-      to: toAirport?.city || to,
-      toCode: to,
-      departure: `${String(depHour).padStart(2, "0")}:${i === 0 ? "00" : "30"}`,
-      arrival: `${String(arrHour).padStart(2, "0")}:${i === 0 ? "15" : "45"}`,
-      duration: `${arrHour - depHour}h ${i === 0 ? "15" : "15"}m`,
-      price: `৳${basePrice.toLocaleString()}`,
-      stops: "Non-stop",
-      date: date,
-    });
-  }
-  return results;
-}
-
-interface SearchResult {
-  type: "flights" | "tours";
-  flights?: ReturnType<typeof generateFlightResults>;
-  tours?: typeof TOUR_PACKAGES;
-  searchParams: Record<string, string>;
-}
 
 export function SearchCard() {
   const [activeTab, setActiveTab] = useState<SearchTab>("flights");
   const [visaCountry, setVisaCountry] = useState("");
-  const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
 
   // Flight form state (lifted up for search)
   const [flightFrom, setFlightFrom] = useState("DAC");
@@ -97,35 +50,22 @@ export function SearchCard() {
 
   const handleSearch = () => {
     if (activeTab === "flights") {
-      const results = generateFlightResults(flightFrom, flightTo, flightDate);
       const fromAirport = AIRPORTS.find(a => a.code === flightFrom);
       const toAirport = AIRPORTS.find(a => a.code === flightTo);
-      setSearchResult({
-        type: "flights",
-        flights: results,
-        searchParams: {
-          from: fromAirport?.city || flightFrom,
-          to: toAirport?.city || flightTo,
-          date: flightDate,
-          tripType: flightTripType,
-          travelers: flightTravelers,
-          baggage,
-        },
-      });
+      const fromDisplay = fromAirport ? `${fromAirport.city} (${flightFrom})` : flightFrom;
+      const toDisplay = toAirport ? `${toAirport.city} (${flightTo})` : flightTo;
+      
+      const message = `Hi MusaFly! I'm interested in booking a flight:\n✈️ ${fromDisplay} → ${toDisplay}\n📅 Date: ${flightDate}\n🔄 Trip Type: ${flightTripType}\n👤 ${flightTravelers}\n🧳 ${baggage}\n\nPlease provide available options and pricing.`;
+      
+      const encoded = encodeURIComponent(message);
+      window.open(`${SITE_CONFIG.whatsappLink}?text=${encoded}`, "_blank");
+      
     } else if (activeTab === "tours") {
-      const filtered = TOUR_PACKAGES.filter(p => p.destination === tourDestination);
-      const results = filtered.length > 0 ? filtered : TOUR_PACKAGES.slice(0, 3);
-      setSearchResult({
-        type: "tours",
-        tours: results,
-        searchParams: {
-          destination: tourDestination,
-          date: tourDate,
-          duration: tourDuration,
-          travelers: tourTravelers,
-          baggage,
-        },
-      });
+      const message = `Hi MusaFly! I'm interested in a tour package:\n🌴 Destination: ${tourDestination}\n📅 Duration: ${tourDuration}\n👤 ${tourTravelers}\n🧳 ${baggage}\n${tourDate ? `📆 Preferred Date: ${tourDate}\n` : ""}\nPlease provide available options and pricing.`;
+      
+      const encoded = encodeURIComponent(message);
+      window.open(`${SITE_CONFIG.whatsappLink}?text=${encoded}`, "_blank");
+      
     } else if (activeTab === "visa") {
       if (visaCountry) {
         window.location.href = `/visa/${visaCountry.toLowerCase()}-visa`;
@@ -192,10 +132,6 @@ export function SearchCard() {
         </div>
       </div>
 
-      {/* Search Results Modal */}
-      {searchResult && (
-        <SearchResultsModal result={searchResult} onClose={() => setSearchResult(null)} />
-      )}
     </>
   );
 }
@@ -535,122 +471,4 @@ function VisaForm({ country, setCountry }: { country: string; setCountry: (val: 
   );
 }
 
-/* ──────────────── Search Results Modal ──────────────── */
 
-function SearchResultsModal({ result, onClose }: { result: SearchResult; onClose: () => void }) {
-  const handleWhatsApp = (message: string) => {
-    const encoded = encodeURIComponent(message);
-    window.open(`${SITE_CONFIG.whatsappLink}?text=${encoded}`, "_blank");
-  };
-
-  return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center bg-black/50 backdrop-blur-sm overflow-y-auto py-6 md:py-10 px-3 md:px-4" onClick={onClose}>
-      <div className="bg-white rounded-2xl md:rounded-3xl shadow-2xl w-full max-w-[900px] relative animate-in" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
-        <div className="bg-gradient-to-r from-primary to-primary/80 text-white rounded-t-2xl md:rounded-t-3xl px-4 md:px-8 py-4 md:py-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-lg md:text-2xl font-bold mb-1">
-              {result.type === "flights" ? "✈️ Flight Results" : "🌴 Tour Packages"}
-            </h2>
-            <p className="text-white/80 text-xs md:text-sm">
-              {result.type === "flights"
-                ? `${result.searchParams.from} → ${result.searchParams.to} • ${result.searchParams.date} • ${result.searchParams.travelers} • ${result.searchParams.baggage}`
-                : `${result.searchParams.destination} • ${result.searchParams.duration} • ${result.searchParams.travelers} • ${result.searchParams.baggage}`
-              }
-            </p>
-          </div>
-          <button onClick={onClose} className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors">
-            <X className="w-4 h-4 md:w-5 md:h-5 text-white" />
-          </button>
-        </div>
-
-        {/* Results */}
-        <div className="p-4 md:p-8 space-y-3 md:space-y-4 max-h-[70vh] overflow-y-auto">
-          {result.type === "flights" && result.flights?.map((flight) => (
-            <div key={flight.id} className="border border-gray-100 rounded-xl md:rounded-2xl p-3 md:p-6 hover:shadow-lg hover:border-primary/30 transition-all">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4">
-                {/* Airline & Route */}
-                <div className="flex-1">
-                  <div className="text-xs md:text-sm font-semibold text-primary mb-2 md:mb-3 flex items-center gap-1.5">
-                    <Plane className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                    {flight.airline}
-                  </div>
-                  <div className="flex items-center gap-2 md:gap-4">
-                    <div className="text-center">
-                      <div className="text-base md:text-xl font-bold text-gray-900">{flight.departure}</div>
-                      <div className="text-[10px] md:text-xs text-gray-500">{flight.fromCode}</div>
-                    </div>
-                    <div className="flex-1 flex flex-col items-center px-1 md:px-2">
-                      <div className="text-[9px] md:text-xs text-gray-400">{flight.duration}</div>
-                      <div className="w-full h-[1px] bg-gray-300 relative my-1">
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-primary rounded-full" />
-                      </div>
-                      <div className="text-[9px] md:text-xs text-green-600 font-medium">{flight.stops}</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-base md:text-xl font-bold text-gray-900">{flight.arrival}</div>
-                      <div className="text-[10px] md:text-xs text-gray-500">{flight.toCode}</div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* CTA */}
-                <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-2 md:gap-3 border-t md:border-t-0 md:border-l border-gray-100 pt-3 md:pt-0 md:pl-6">
-                  <button
-                    onClick={() => handleWhatsApp(`Hi MusaFly! I'm interested in booking a flight:\n✈️ ${flight.from} (${flight.fromCode}) → ${flight.to} (${flight.toCode})\n📅 Date: ${flight.date}\n🕐 Time: ${flight.departure} - ${flight.arrival}\n✈️ Airline: ${flight.airline}\n👤 ${result.searchParams.travelers}\n🧳 ${result.searchParams.baggage}\n\nPlease provide more details.`)}
-                    className="bg-green-500 hover:bg-green-600 text-white text-xs md:text-sm font-bold px-3 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl flex items-center gap-1.5 transition-colors whitespace-nowrap w-full md:w-auto justify-center"
-                  >
-                    <MessageCircle className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                    Contact WhatsApp
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {result.type === "tours" && result.tours?.map((tour, index) => (
-            <div key={index} className="border border-gray-100 rounded-xl md:rounded-2xl p-3 md:p-6 hover:shadow-lg hover:border-primary/30 transition-all">
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-3 md:gap-4">
-                {/* Tour Info */}
-                <div className="flex-1">
-                  <h3 className="text-base md:text-xl font-bold text-primary mb-1 md:mb-2 flex items-center gap-1.5">
-                    <MapPin className="w-4 h-4 md:w-5 md:h-5" />
-                    {tour.destination}
-                  </h3>
-                  <div className="flex flex-wrap gap-2 md:gap-4 text-[10px] md:text-sm text-gray-500 mb-2 md:mb-3">
-                    <span className="flex items-center gap-1"><Clock className="w-3 h-3 md:w-4 md:h-4" /> {tour.duration}</span>
-                    <span className="flex items-center gap-1"><Users className="w-3 h-3 md:w-4 md:h-4" /> {result.searchParams.travelers}</span>
-                    {result.searchParams.date && <span className="flex items-center gap-1"><Calendar className="w-3 h-3 md:w-4 md:h-4" /> {result.searchParams.date}</span>}
-                  </div>
-                  <div className="flex flex-wrap gap-1.5 md:gap-2">
-                    {tour.highlights.map((h, i) => (
-                      <span key={i} className="bg-primary/10 text-primary text-[9px] md:text-xs font-medium px-2 md:px-3 py-0.5 md:py-1 rounded-full">{h}</span>
-                    ))}
-                  </div>
-                </div>
-                
-                {/* CTA */}
-                <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-2 md:gap-3 border-t md:border-t-0 md:border-l border-gray-100 pt-3 md:pt-0 md:pl-6">
-                  <button
-                    onClick={() => handleWhatsApp(`Hi MusaFly! I'm interested in a tour package:\n🌴 Destination: ${tour.destination}\n📅 Duration: ${tour.duration}\n👤 ${result.searchParams.travelers}\n🧳 ${result.searchParams.baggage}\n${result.searchParams.date ? `📆 Preferred Date: ${result.searchParams.date}\n` : ""}\nPlease provide more details.`)}
-                    className="bg-green-500 hover:bg-green-600 text-white text-xs md:text-sm font-bold px-3 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl flex items-center gap-1.5 transition-colors whitespace-nowrap w-full md:w-auto justify-center"
-                  >
-                    <MessageCircle className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                    Contact WhatsApp
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Footer */}
-        <div className="border-t border-gray-100 px-4 md:px-8 py-3 md:py-4 rounded-b-2xl md:rounded-b-3xl bg-gray-50/50">
-          <p className="text-[10px] md:text-xs text-gray-400 text-center">
-            Prices are indicative. Contact us on WhatsApp for confirmed pricing and availability.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
