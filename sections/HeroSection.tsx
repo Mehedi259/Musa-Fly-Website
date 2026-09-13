@@ -5,7 +5,7 @@ import { SearchCard } from "./SearchCard";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden pb-12 md:pb-24">
+    <section className="relative flex flex-col overflow-hidden pt-24 md:pt-32 pb-16 md:pb-24">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <div
@@ -19,7 +19,7 @@ export function HeroSection() {
       </div>
 
       {/* Hero Content */}
-      <div className="container mx-auto px-4 relative z-10 pt-16 md:pt-32 pb-4 md:pb-8 flex flex-col">
+      <div className="container mx-auto px-4 relative z-10 pt-4 md:pt-8 flex flex-col">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -30,7 +30,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-2 md:mb-6"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 md:mb-6"
           >
             Discover Your Next
             <br />
@@ -38,24 +38,15 @@ export function HeroSection() {
               Adventure
             </span>
           </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="hidden md:block text-lg sm:text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto"
-          >
-            Your journey begins here. Book flights, plan tours, and get your visa
-            with ease.
-          </motion.p>
         </motion.div>
       </div>
 
       {/* Search Card Inside Hero */}
-      <div className="container mx-auto relative z-20 px-4 mt-12 md:mt-8 mb-auto">
+      <div className="container mx-auto relative z-20 px-4 mb-auto mt-6 md:mt-8">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
         >
           <SearchCard />
         </motion.div>
