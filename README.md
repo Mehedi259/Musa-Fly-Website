@@ -7,7 +7,7 @@ Welcome to the official frontend repository for **MusaFly**. This is a modern, r
 * **Styling:** Tailwind CSS
 * **Animations:** Framer Motion
 * **Language:** TypeScript
-* **Deployment:** Vercel
+* **Deployment:** Docker (Hetzner)
 
 ## 📦 Getting Started
 
@@ -35,6 +35,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - `/sections`: Major page sections (Hero, SearchCard, Offers, etc.).
 - `/constants`: Global configurations and dummy data used before API integration.
 - `/public`: Static assets like images and icons.
+
+## 🚢 Deployment
+
+For detailed instructions on how to deploy this application to a Hetzner server using Docker, please refer to the [DEPLOYMENT.md](DEPLOYMENT.md) guide.
 
 ## 🔗 Live Site
 - **Production URL:** [https://musafly.com](https://musafly.com)
