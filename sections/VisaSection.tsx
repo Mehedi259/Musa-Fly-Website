@@ -76,7 +76,7 @@ export function VisaSection() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-64 overflow-hidden">
                     <div
                       className="absolute inset-0 bg-cover bg-center"
                       style={{
