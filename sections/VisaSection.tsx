@@ -81,7 +81,7 @@ export function VisaSection() {
                       className="absolute inset-0 bg-cover bg-center"
                       style={{
                         backgroundImage: visa.image 
-                          ? `url('${visa.image}')` 
+                          ? `url('${visa.image.replace("http://46.225.103.236:8001", "").replace("https://admin.musafly.com", "")}')` 
                           : "url('https://images.unsplash.com/photo-1566552881560-0be862a7c445?q=80&w=2787')"
                       }}
                     />

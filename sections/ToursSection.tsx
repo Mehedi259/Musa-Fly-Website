@@ -79,7 +79,7 @@ export function ToursSection() {
                   <div className="relative h-64 overflow-hidden">
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-300 hover:scale-110"
-                      style={{ backgroundImage: (tour.image || tour.image_url) ? `url('${tour.image || tour.image_url}')` : `url('${index % 2 === 0 ? "/images/visa/singapore.jpg" : "/images/visa/malaysia.jpg"}')` }}
+                      style={{ backgroundImage: (tour.image || tour.image_url) ? `url('${(tour.image || tour.image_url).replace("http://46.225.103.236:8001", "").replace("https://admin.musafly.com", "")}')` : `url('${index % 2 === 0 ? "/images/visa/singapore.jpg" : "/images/visa/malaysia.jpg"}')` }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent" />
                     <div className="absolute bottom-4 left-4 right-4">
