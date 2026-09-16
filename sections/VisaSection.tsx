@@ -111,14 +111,9 @@ export function VisaSection() {
                         <FileText className="w-4 h-4 text-primary" />
                         <span className="font-semibold">Requirements:</span>
                       </div>
-                      <ul className="space-y-1">
-                        {visa.requirements.split(',').slice(0, 3).map((req, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-xs text-gray-600">
-                            <CheckCircle className="w-3 h-3 text-secondary mt-0.5 flex-shrink-0" />
-                            <span>{req.trim()}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="text-xs text-gray-600 whitespace-pre-wrap line-clamp-4">
+                        {visa.requirements}
+                      </div>
                     </div>
                   </CardContent>
 

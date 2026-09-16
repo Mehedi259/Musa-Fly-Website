@@ -94,7 +94,7 @@ export function ToursSection() {
                   </div>
 
                   <CardHeader>
-                    <CardDescription className="line-clamp-2">
+                    <CardDescription className="line-clamp-2 whitespace-pre-wrap">
                       {tour.inclusions}
                     </CardDescription>
                   </CardHeader>
