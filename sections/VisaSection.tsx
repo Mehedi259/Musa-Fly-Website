@@ -78,7 +78,7 @@ export function VisaSection() {
                 <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
                   <div className="relative h-48 overflow-hidden">
                     <div
-                      className="absolute inset-0 bg-contain bg-no-repeat bg-center"
+                      className="absolute inset-0 bg-cover bg-center"
                       style={{
                         backgroundImage: visa.image 
                           ? `url('${visa.image.replace("http://46.225.103.236:8001", "").replace("https://admin.musafly.com", "")}')` 
