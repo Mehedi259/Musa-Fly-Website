@@ -15,6 +15,7 @@ interface Visa {
   processing_time: string;
   price: string;
   requirements: string;
+  image?: string;
 }
 
 export function VisaSection() {
@@ -79,14 +80,9 @@ export function VisaSection() {
                     <div
                       className="absolute inset-0 bg-cover bg-center"
                       style={{
-                        backgroundImage:
-                          visa.country.toLowerCase() === "singapore"
-                            ? "url('https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=2852')"
-                            : visa.country.toLowerCase() === "malaysia"
-                              ? "url('https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=2864')"
-                              : visa.country.toLowerCase() === "oman"
-                                ? "url('https://images.unsplash.com/photo-1547304638-aa0a7b5aae3d?q=80&w=2940')"
-                                : "url('https://images.unsplash.com/photo-1566552881560-0be862a7c445?q=80&w=2787')",
+                        backgroundImage: visa.image 
+                          ? `url('${visa.image}')` 
+                          : "url('https://images.unsplash.com/photo-1566552881560-0be862a7c445?q=80&w=2787')"
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark to-transparent" />
